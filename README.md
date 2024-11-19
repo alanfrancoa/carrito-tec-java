@@ -1,4 +1,4 @@
-# Sistema de Gestión de Inventario y Ventas - Tecnoogias Java
+# Sistema de Gestión de Inventario y Ventas - Tecnologias Java
 
 **Descripción:**
 Este proyecto Java Web es un sistema de gestión de inventario y ventas que permite a los usuarios administrar artículos, realizar compras y gestionar sus saldos.
