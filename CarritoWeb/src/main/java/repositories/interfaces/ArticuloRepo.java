@@ -10,7 +10,7 @@ public interface ArticuloRepo {
 	
 	public List<Articulo> getAllArticulos();
 	
-	public Articulo findArtByCod(int id);
+	public Articulo findArtByCod(String codigo_art);
 	
 	public void createArticulo(Articulo articulo);
 	
