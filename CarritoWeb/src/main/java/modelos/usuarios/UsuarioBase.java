@@ -43,6 +43,16 @@ public abstract class UsuarioBase implements Usuario{
 	public String toString() {
 		return "Usuario [nombreUsuario=" + this.nombreUsuario + ", getTipoUsuario()=" + this.getTipoUsuario() + "]";
 	}
+	
+	public static Empleado getInstance() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public String getByUsuario() {
+		return this.nombreUsuario;
+	}
+	
 }
 	
 	

@@ -8,9 +8,13 @@ public interface UsuarioRepo {
 	
 	    List<UsuarioBase> getAllUsuarios();
 	    
+	    public UsuarioBase getUsuario();
+	    
 	    //agregar un usuario
 	    public void addUsuario(UsuarioBase nombreUsuario);
 
 	    //obtener un empleado por nombre de usuario
-	    public void obtenerEmpleado(UsuarioBase nombreUsuario);
+	    public void getUsuario(UsuarioBase nombreUsuario);
+	    
+	    public void setUsuario(UsuarioBase usuario);
 }

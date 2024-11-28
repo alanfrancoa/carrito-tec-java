@@ -24,6 +24,7 @@ public class Empleado extends UsuarioBase{
 	public String getTipoUsuario() {
 		return "EMPLEADO";
 	}
+
 	
 	
 }
