@@ -16,7 +16,7 @@ public interface ArticuloRepo {
 	
 	public void updateArticulo(Articulo articulo);
 	
-	public void deleteArticulo(int id);
+	public void deleteArticulo(String codigo_art);
 	
 	//To check: si es necesario metodo updateStock por relacion del editArt//
 }
