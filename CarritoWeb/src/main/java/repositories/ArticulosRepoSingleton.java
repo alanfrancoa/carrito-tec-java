@@ -17,9 +17,9 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
 	public ArticulosRepoSingleton() {
 		
 		this.listaArticulos = new ArrayList<Articulo>();
-		Articulo articulo1 = new Articulo(1, "Queso Crema", 2500, 100, "Lacteos");
-		Articulo articulo2 = new Articulo(2, "Coca-cola", 3700, 1000, "Bebidas");
-		Articulo articulo3 = new Articulo(3, "Oreos", 1700, 80, "Galletas");
+		Articulo articulo1 = new Articulo(1, "ABC1" ,"Queso Crema", 2500, 100, "Lacteos");
+		Articulo articulo2 = new Articulo(2, "ABC2","Coca-cola", 3700, 1000, "Bebidas");
+		Articulo articulo3 = new Articulo(3, "ABC3","Oreos", 1700, 80, "Galletas");
 		
 		this.createArticulo(articulo1);
 		this.createArticulo(articulo2);
@@ -41,8 +41,7 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
 
 	@Override
 	public void createArticulo(Articulo articulo) {
-		// TODO Auto-generated method stub
-		
+			
 	}
 
 	@Override
