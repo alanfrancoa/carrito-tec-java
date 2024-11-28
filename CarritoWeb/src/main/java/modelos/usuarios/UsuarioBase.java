@@ -27,7 +27,7 @@ public abstract class UsuarioBase implements Usuario{
 	//getters (implementados por medio de interfaz usuario)
 	@Override
 	public String getNombreUsuario() {
-		return this.nombreUsuario;
+		return nombreUsuario;
 	}
 	@Override
 	public String getClaveUsuario() {
@@ -43,16 +43,11 @@ public abstract class UsuarioBase implements Usuario{
 	public String toString() {
 		return "Usuario [nombreUsuario=" + this.nombreUsuario + ", getTipoUsuario()=" + this.getTipoUsuario() + "]";
 	}
-	
-	public static Empleado getInstance() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	public String getByUsuario() {
+
+	public String getUsuario() {
 		return this.nombreUsuario;
 	}
-	
+
 }
 	
 	

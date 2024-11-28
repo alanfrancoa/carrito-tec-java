@@ -12,9 +12,6 @@ public interface UsuarioRepo {
 	    
 	    //agregar un usuario
 	    public void addUsuario(UsuarioBase nombreUsuario);
-
-	    //obtener un empleado por nombre de usuario
-	    public void getUsuario(UsuarioBase nombreUsuario);
 	    
 	    public void setUsuario(UsuarioBase usuario);
 }
