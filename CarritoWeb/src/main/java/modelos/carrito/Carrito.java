@@ -4,39 +4,71 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Carrito {
-	private static Carrito instanciaUnica;  //singleton
+
+	// Singleton para única instancia
+	private static Carrito instanciaUnica;
+
+	// Lista de renglones (productos en el carrito)
 	private ArrayList<Renglon> listaCompra;
 
-	public Carrito() {
+	// Constructor privado para restringir la creación de instancias
+	private Carrito() {
 		this.listaCompra = new ArrayList<>();
 	}
-	
-	//metodo para obtener la unica instancia del carrito
+
+	/**
+	 * Método para obtener la única instancia del carrito. Implementa el patrón
+	 * Singleton.
+	 */
 	public static Carrito getInstance() {
-		if(instanciaUnica == null) {
+		if (instanciaUnica == null) {
 			instanciaUnica = new Carrito();
 		}
 		return instanciaUnica;
 	}
-	
-	
+
+	/**
+	 * Agrega un nuevo renglón (producto) al carrito.
+	 * 
+	 * @param nuevoRenglon El renglón a agregar.
+	 */
 	public void agregar(Renglon nuevoRenglon) {
 		listaCompra.add(nuevoRenglon);
 	}
-	
-	//ver contenido del carrito
-	public List<Renglon> verCarrito(){
+
+	/**
+	 * Devuelve la lista completa de renglones en el carrito.
+	 * 
+	 * @return Lista de renglones.
+	 */
+	public List<Renglon> verCarrito() {
 		return this.listaCompra;
 	}
-	
-	//calcular monto total
+
+	/**
+	 * Calcula el monto total del carrito sumando los precios totales de cada
+	 * renglón.
+	 * 
+	 * @return Monto total del carrito.
+	 */
 	public double verMontoTotal() {
 		double total = 0;
-		for(Renglon renglon : listaCompra) {
+		for (Renglon renglon : listaCompra) {
 			total += renglon.calcularPrecioTotal();
 		}
 		return total;
 	}
-	//ver finalizar compra y vaciar carrito...
-	
+
+	/**
+	 * Finaliza la compra, mostrando el monto total y vaciando el carrito.
+	 * 
+	 * @return El monto total de la compra antes de vaciar el carrito.
+	 */
+	public double finalizarCompra() {
+		
+		double total = this.verMontoTotal();
+		listaCompra.clear();
+		return total;
+	}
+
 }
