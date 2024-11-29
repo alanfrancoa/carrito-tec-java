@@ -44,10 +44,6 @@ public abstract class UsuarioBase implements Usuario{
 		return "Usuario [nombreUsuario=" + this.nombreUsuario + ", getTipoUsuario()=" + this.getTipoUsuario() + "]";
 	}
 
-	public String getUsuario() {
-		return this.nombreUsuario;
-	}
-
 }
 	
 	

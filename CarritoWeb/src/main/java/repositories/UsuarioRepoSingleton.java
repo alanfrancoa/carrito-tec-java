@@ -19,9 +19,6 @@ public class UsuarioRepoSingleton implements UsuarioRepo{
 	public UsuarioRepoSingleton() {
 		this.listaUsuarios = new ArrayList<>();
         this.mensajes = new ArrayList<>();
-        
-		this.setUsuario(UsuarioBase.getInstance());
-        this.mensajes = new ArrayList<>();
 	}
 	
 	public static UsuarioRepoSingleton getInstance() {
@@ -37,58 +34,41 @@ public class UsuarioRepoSingleton implements UsuarioRepo{
 
 	}
 
-    
-    
-	    
-	    //agregar un usuario
-	    public void addUsuario(UsuarioBase usuario) {
-	    	// Verificar si el código del artículo ya existe
-	        boolean existe = this.listaUsuarios.stream()
-	                .anyMatch(a -> a.getNombreUsuario().equals(usuario.getNombreUsuario()));
+    //agregar un usuario
+    @Override 
+    public void addUsuario(UsuarioBase usuario) {
+    	// Verificar si el código del artículo ya existe
+        boolean existe = this.listaUsuarios.stream()
+                .anyMatch(a -> a.getNombreUsuario().equals(usuario.getNombreUsuario()));
 
-	        if (existe) {
-	            // Guardar mensaje si el artículo ya existe
-	            mensajes.add("Ya existe un usuario con el nombre" + usuario.getNombreUsuario());
-	        } else {
-	            // Agregar el artículo a la lista
-	            this.listaUsuarios.add(usuario);
-	            mensajes.add("Artículo agregado exitosamente: " + usuario.getNombreUsuario());
-	        }
-		}
+        if (existe) {
+            
+            mensajes.add("Ya existe un usuario con el nombre" + usuario.getNombreUsuario());
+        } else {
+            
+            this.listaUsuarios.add(usuario);
+            mensajes.add("Usuario agregado exitosamente: " + usuario.getNombreUsuario());
+        }
+	}
 
-	    //obtener un empleado por nombre de usuario
-	    public UsuarioBase getUsuario(String nombreUsuario) {
-	    	
-	    	return this.listaUsuarios.stream()
-	                .filter(a -> a.getNombreUsuario().equals(nombreUsuario))
-	                .findAny()
-	                .orElse(null);
-	    	
-	    }
-		
-	    
+    //obtener por nombre de usuario
+    @Override 
+    public UsuarioBase getUsuario(String nombreUsuario) {
+    	
+    	return this.listaUsuarios.stream()
+                .filter(a -> a.getNombreUsuario().equals(nombreUsuario))
+                .findAny()
+                .orElse(null);
+    }
+	
+   	
+	
+	public List<String> getMensajes() {
+        return new ArrayList<>(mensajes);
+    }
 
-		@Override
-		public UsuarioBase getUsuario() {
-			// TODO Auto-generated method stub
-			return null;
-		}
-
-		
-		
-		public List<String> getMensajes() {
-	        return new ArrayList<>(mensajes);
-	    }
-
-	    public void limpiarMensajes() {
-	        mensajes.clear();
-	    }
-
-		@Override
-		public void setUsuario(UsuarioBase usuario) {
-			// TODO Auto-generated method stub
-			
-		}
-
+    public void limpiarMensajes() {
+        mensajes.clear();
+    }
 	    
 }

@@ -8,10 +8,9 @@ public interface UsuarioRepo {
 	
 	    List<UsuarioBase> getAllUsuarios();
 	    
-	    public UsuarioBase getUsuario();
+	    public UsuarioBase getUsuario(String nombreUsuario);
 	    
 	    //agregar un usuario
-	    public void addUsuario(UsuarioBase nombreUsuario);
+	    public void addUsuario(UsuarioBase nuevoUsuario);
 	    
-	    public void setUsuario(UsuarioBase usuario);
 }
