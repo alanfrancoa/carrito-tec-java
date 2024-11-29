@@ -10,9 +10,6 @@ public interface EmpleadoRepo {
     
     //obtener empleado por nombre de usuario
     public Empleado getEmpleado(String nombreUsuario);
-    
-    //agregar un empleado
-    public void addEmpleado(Empleado empleado);
   
 }
 
