@@ -81,13 +81,12 @@ public class ArticuloController extends HttpServlet {
 
 
 	private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
+				
 		ArticuloRepo repo = ArticulosRepoSingleton.getInstance();
 		
-		List<Articulo> listArti = repo.getAllArticulos();
+		List<Articulo> listArt = repo.getAllArticulos();
 		
-		request.setAttribute("listita",listArti);
+		request.setAttribute("listita", listArt);
 		
 		request.getRequestDispatcher("/views/articulos/index.jsp").forward(request, response);
 
