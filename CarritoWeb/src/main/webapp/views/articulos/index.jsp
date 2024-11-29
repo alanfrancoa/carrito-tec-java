@@ -1,8 +1,6 @@
-<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-   
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,6 +9,7 @@
 </head>
 <body>
 
+ <a href="articulos?accion=CrearArticulos"> Agregar Articulo </a>
 	<table border="1">
 		<thead>
 			<tr> 
@@ -31,9 +30,8 @@
 			<td> <c:out value="${articulo.stock}" /> </td>
 			<td> <c:out value="${articulo.rubro}" /> </td>
 			
-			<td> <a href="#"> Cargar</td>
-			<td> <a href="#"> Editar</td>
-			<td> <a href="#"> Eliminar</td>
+			<td> <a href="articulos?accion=EditarArticulos&codigo_art=${articulo.codigo_art}"> Editar</td> </a>
+			<td> <a href="#"> Eliminar</td> </a>
 			
 			</tr>
 		</c:forEach>
