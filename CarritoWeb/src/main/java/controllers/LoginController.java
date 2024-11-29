@@ -1,8 +1,6 @@
 package controllers;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -12,16 +10,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import modelos.usuarios.Cliente;
 import modelos.usuarios.UsuarioBase;
 import repositories.UsuarioRepoSingleton;
 
-@WebServlet("/UsuarioController")
-public class UsuarioController extends HttpServlet {
+@WebServlet("/LoginController")
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private UsuarioRepoSingleton usuarioRepo;
 
-	public UsuarioController() {
+	public LoginController() {
 		super();
 
 	}
@@ -30,6 +29,7 @@ public class UsuarioController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String accion = request.getParameter("accion");
 		accion = Optional.ofNullable(accion).orElse("Log-in");
 
@@ -39,6 +39,8 @@ public class UsuarioController extends HttpServlet {
 		default -> response.sendError(404);
 		}
 	}
+
+	
 
 	private void mostrarLoginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -54,6 +56,7 @@ public class UsuarioController extends HttpServlet {
 		accion = Optional.ofNullable(accion).orElse("Log-in");
 
 		switch (accion) {
+		case "Sign-in" -> registrarUsuario(request, response);
 		case "Log-in" -> loginUsuario(request, response);
 		default -> response.sendError(404);
 		}
@@ -73,9 +76,9 @@ public class UsuarioController extends HttpServlet {
 			HttpSession session = request.getSession(); // Crea la sesión para el usuario que se logee
 			session.setAttribute("usuarioLoggeado", usuarioIngresado);
 			if (usuarioIngresado.getTipoUsuario().equals("CLIENTE")) {
-				response.sendRedirect("views/usuarios/clienteDashboard.jsp");
+				response.sendRedirect("views/usuario/clienteDashboard.jsp");
 			} else {
-				response.sendRedirect("views/usuarios/empleadoDashboard.jsp");
+				response.sendRedirect("views/usuario/empleadoDashboard.jsp");
 			}
 
 		} else {
@@ -84,5 +87,29 @@ public class UsuarioController extends HttpServlet {
 		}
 
 	}
-	
+	/*----------------------registrarUsuario--------------------------*/
+
+	private void registrarUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String tipoUsuario = request.getParameter("tipoUsuario");
+		String nombreUsuario = request.getParameter("nombreUsuario");
+		String claveUsuario = request.getParameter("claveUsuario");
+
+		UsuarioBase nuevoUsuario;
+
+		if ("CLIENTE".equals(tipoUsuario)) {
+			double saldo = Double.parseDouble(request.getParameter("Saldo"));
+			nuevoUsuario = new Cliente(nombreUsuario, claveUsuario, saldo); // Crea un usuario que es de tipo CLIENTE
+																			// con saldo
+
+		} else {
+			request.setAttribute("error", "Tipo de usuario inválido");
+			request.getRequestDispatcher("error.jsp").forward(request, response);
+			return;
+		}
+
+		usuarioRepo.addUsuario(nuevoUsuario); // agrega el nuevo usuario
+		response.sendRedirect("UsuarioController?action=Log-in");
+
+	}
 }
