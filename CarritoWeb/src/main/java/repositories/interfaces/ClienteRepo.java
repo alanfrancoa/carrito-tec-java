@@ -8,10 +8,14 @@ public interface ClienteRepo {
 	//Lista de usuarios empleados
     List<Cliente> getAllClientes();
     
-    //obtener empleado por nombre de usuario
+    //obtener cliente 
     public Cliente getCliente(String nombreUsuario);
     
-    //agregar un empleado
+    //agregar un cliente
     public void addCliente(Cliente empleado);
     
+    //modulo saldo
+    void transferirSaldo(String usuarioOrigen, String usuarioDestino, double monto);
+    void ingresarSaldo(String nombreUsuario, double monto);
+    void retirarSaldo(String nombreUsuario, double monto);
 }
