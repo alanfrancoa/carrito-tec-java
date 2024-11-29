@@ -42,14 +42,15 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
     @Override
     public List<Articulo> getAllArticulos() {
         // Devolver una copia de la lista de artículos
-        return new ArrayList<>(this.listaArticulos);
+    	
+    	return new ArrayList<>(this.listaArticulos);
     }
 
     @Override
     public Articulo findArtByCod(String codigo_art) {
         // Buscar un artículo por su código
         return this.listaArticulos.stream()
-                .filter(a -> a.getcodigo_art().equals(codigo_art))
+                .filter(a -> a.getCodigo_art().equals(codigo_art))
                 .findAny()
                 .orElse(null);
     }
@@ -58,22 +59,22 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
     public void createArticulo(Articulo articulo) {
         // Verificar si el código del artículo ya existe
         boolean existe = this.listaArticulos.stream()
-                .anyMatch(a -> a.getcodigo_art().equals(articulo.getcodigo_art()));
+                .anyMatch(a -> a.getCodigo_art().equals(articulo.getCodigo_art()));
 
         if (existe) {
             // Guardar mensaje si el artículo ya existe
-            mensajes.add("Ya existe un artículo con el código: " + articulo.getcodigo_art());
+            mensajes.add("Ya existe un artículo con el código: " + articulo.getCodigo_art());
         } else {
             // Agregar el artículo a la lista
             this.listaArticulos.add(articulo);
-            mensajes.add("Artículo agregado exitosamente: " + articulo.getcodigo_art());
+            mensajes.add("Artículo agregado exitosamente: " + articulo.getCodigo_art());
         }
     }
 
     @Override
     public void updateArticulo(Articulo articulo) {
         // Buscar el artículo por su código
-        Articulo existente = findArtByCod(articulo.getcodigo_art());
+        Articulo existente = findArtByCod(articulo.getCodigo_art());
 
         if (existente != null) {
             // Actualizar los campos del artículo encontrado
@@ -81,15 +82,15 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
             existente.setPrecio(articulo.getPrecio());
             existente.setStock(articulo.getStock());
             existente.setRubro(articulo.getRubro());
-            mensajes.add("Artículo actualizado correctamente: " + articulo.getcodigo_art());
+            mensajes.add("Artículo actualizado correctamente: " + articulo.getCodigo_art());
         } else {
-            mensajes.add("No se encontró el artículo con el código: " + articulo.getcodigo_art());
+            mensajes.add("No se encontró el artículo con el código: " + articulo.getCodigo_art());
         }
     }
     @Override
     public void deleteArticulo(String codigo_art) {
         // Buscar el artículo por su código y eliminarlo si existe
-        boolean eliminado = this.listaArticulos.removeIf(a -> a.getcodigo_art().equals(codigo_art));
+        boolean eliminado = this.listaArticulos.removeIf(a -> a.getCodigo_art().equals(codigo_art));
 
         if (eliminado) {
             mensajes.add("Artículo eliminado correctamente: " + codigo_art);

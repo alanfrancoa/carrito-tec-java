@@ -20,7 +20,7 @@ public class Articulo {
 	
 	
 	//getters y setters
-	public String getcodigo_art() {
+	public String getCodigo_art() {
 		return codigo_art;
 	}
 	public String getNombre() {
