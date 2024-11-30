@@ -101,16 +101,55 @@ public class ArticuloController extends HttpServlet {
 		
 		String accion = request.getParameter("accion");
 		//accion = Optional.ofNullable(accion).orElse("CrearArticulos");
+		
+		if(accion== null) {
 			
+			response.sendError(400, "no se brindo una accion");
+			//cortar el metodo y asegurar que el codigo no avance//
+			return;
+		}
 
 		switch (accion) {
 		case "CrearArticulos" -> postCrearArticulos(request,response);
+		case "EditarArticulos" -> postEditarArticulos(request,response);
+		case "EliminarArticulos" -> postEliminarArticulos(request,response);
+		
 						
 		default-> response.sendError(404,"No existe la accion: " +accion);
 			
 		}
 		
 		
+	}
+
+	private void postEliminarArticulos(HttpServletRequest request, HttpServletResponse response) {
+		
+	}
+
+	private void postEditarArticulos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+				
+		String codigo = request.getParameter("codigo");
+		
+		String nombre = request.getParameter("nombre");
+		
+		String sPrecio = request.getParameter("precio");
+		double precio = Double.parseDouble(sPrecio);
+		
+		String sStock = request.getParameter("stock");
+		int stock = Integer.parseInt(sStock);
+		
+		String rubro = request.getParameter("rubro");
+		
+		
+		Articulo arti = articulosRepo.findArtByCod(codigo);
+		arti.setNombre(nombre);
+		arti.setPrecio(precio);
+		arti.setStock(stock);
+		arti.setRubro(rubro);
+		
+		articulosRepo.updateArticulo(arti);
+		
+		response.sendRedirect("articulos");
 	}
 
 	private void postCrearArticulos(HttpServletRequest request, HttpServletResponse response) throws IOException {

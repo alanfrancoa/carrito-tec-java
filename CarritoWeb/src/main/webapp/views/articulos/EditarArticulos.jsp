@@ -10,7 +10,8 @@
 
 <h1> Editar</h1>
 
-<form action="articulos" method="post">
+<form action="articulos" method="post"> 
+<input type="hidden" value="EditarArticulos" name="accion">
 
 	<p> 
 		Codigo:<input value="${articulo.codigo_art }" name= "codigo"/>
