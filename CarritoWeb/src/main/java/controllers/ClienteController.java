@@ -1,6 +1,8 @@
 package controllers;
 
 import java.io.IOException;
+import java.util.Optional;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +32,8 @@ public class ClienteController extends HttpServlet {
             throws ServletException, IOException {
         // Obtenemos el parámetro 'accion' de la solicitud. Si no está presente, por defecto es "Dashboard".
         String accion = request.getParameter("accion");
-        accion = (accion != null) ? accion : "Dashboard"; // Si no se especifica acción, se muestra el dashboard
+        
+        accion = Optional.ofNullable(accion).orElse("Dashboard");// Si no se especifica acción, se muestra el dashboard
 
         // Según la acción solicitada, se llama al método correspondiente
         switch (accion) {
