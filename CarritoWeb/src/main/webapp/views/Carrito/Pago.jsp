@@ -17,16 +17,16 @@
 
             
             <div class="border p-4 rounded shadow-sm">
-                <form action="CarritoController?accion=finalizarCompra" method="POST"> 
+                <form action="carrito?accion=finalizar" method="POST"> 
 
                     <div class="mb-3">
                         <label class="form-label">Saldo Actual:</label>
-                        <p class="form-control-plaintext"><c:out value="${Cliente.getSaldo}"/></p>
+                        <p class="form-control-plaintext"><c:out value="${cliente.getSaldo}"/></p>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Total:</label>
-                        <p class="form-control-plaintext"><c:out value="${Carrito.verMontoTotal}"/></p>
+                        <h3 class="form-control-plaintext">$ <c:out value="${total}"/></h3>
                     </div>
 
                     <div class="mb-3 text-center">
