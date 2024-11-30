@@ -15,10 +15,16 @@ import javax.servlet.http.HttpSession;
 import modelos.articulos.Articulo;
 import modelos.carrito.Carrito;
 import modelos.carrito.Renglon;
+import modelos.compras.Compra;
+import repositories.ArticulosRepoSingleton;
+import repositories.CompraRepoSingleton;
+import repositories.interfaces.CompraRepo;
 
-@WebServlet("/CarritoController")
+@WebServlet("/carrito")
 public class CarritoController extends HttpServlet {
     private static final long serialVersionUID = 1L;
+    
+    private static ArticulosRepoSingleton articuloRepo;
 
     // ------------------------ Métodos del Servlet ------------------------ //
 
@@ -54,6 +60,12 @@ public class CarritoController extends HttpServlet {
         HttpSession session = request.getSession();
         session.removeAttribute("mensajes");
     }
+    
+    // Metodo para generar un numero unico para la factura
+ // Generar un número único de factura
+    private String generarNumeroFactura() {
+        return "FAC-" + System.currentTimeMillis(); // Usa un timestamp para garantizar unicidad
+    }
 
     // ------------------------ DO GET ------------------------ //
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -65,18 +77,19 @@ public class CarritoController extends HttpServlet {
         switch (accion) {
             case "index" -> mostrarCarrito(request, response);
             case "total" -> mostrarMontoTotal(request, response);
+            case "agregar" -> mostrarVistaAgregar(request, response);
             case "finalizar" -> finalizarCompra(request, response);
             default -> response.sendError(404);
         }
     }
 
-    // Métodos para manejar el carrito
+	// Métodos para manejar el carrito
     private void mostrarCarrito(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Carrito carritoActual = obtenerCarritoDeSesion(request);
         request.setAttribute("carrito", carritoActual);
-        request.getRequestDispatcher("views/carrito/carrito.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/carrito/carrito.jsp").forward(request, response);
     }
 
     private void mostrarMontoTotal(HttpServletRequest request, HttpServletResponse response)
@@ -85,30 +98,44 @@ public class CarritoController extends HttpServlet {
         Carrito carritoActual = obtenerCarritoDeSesion(request);
         double montoTotal = carritoActual.verMontoTotal();
         request.setAttribute("montoTotal", montoTotal);
-        request.getRequestDispatcher("views/carrito/carritoTotal.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/carrito/carritoTotal.jsp").forward(request, response);
     }
+    
+    private void mostrarVistaAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	
+    	articuloRepo = ArticulosRepoSingleton.getInstance();
+    	
+    	// Me traigo la lista de articulos
+    	List<Articulo> listArt = articuloRepo.getAllArticulos();
+    	
+		request.setAttribute("listita", listArt);
+		
+    	request.getRequestDispatcher("/views/carrito/agregarAlCarrito.jsp").forward(request, response);
+	}
 
     private void finalizarCompra(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
+    	// Obtenemos el carrito actual de sesion
         Carrito carritoActual = obtenerCarritoDeSesion(request);
 
+        // Validamos si el carrito esta vacio
         if (carritoActual.verCarrito().isEmpty()) {
             agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
-            response.sendRedirect("CarritoController?accion=index");
+            response.sendRedirect("carrito?accion=carrito");
             return;
         }
         
-        
+        // Calcular el monto total 
         double montoFinal = carritoActual.verMontoTotal();
         for (Renglon renglon : carritoActual.verCarrito()) {
             Articulo articulo = renglon.getProducto();
             articulo.setStock(articulo.getStock() - renglon.getCantidad());
         }
         
-        carritoActual.finalizarCompra();
-        agregarMensaje(request, "Compra finalizada con éxito. Monto total: " + montoFinal);
-        response.sendRedirect("CarritoController?accion=index");
+        request.setAttribute("total", montoFinal);
+        
+        request.getRequestDispatcher("/views/carrito/pago.jsp").forward(request, response);
     }
 
     // ------------------------ DO POST ------------------------ //
@@ -117,7 +144,7 @@ public class CarritoController extends HttpServlet {
 
         String accion = request.getParameter("accion");
 
-        if ("agregar".equalsIgnoreCase(accion)) {
+        if ("agregarAlCarrito".equalsIgnoreCase(accion)) {
             agregarProductoAlCarrito(request, response);
         }
     }
@@ -125,27 +152,32 @@ public class CarritoController extends HttpServlet {
     private void agregarProductoAlCarrito(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        int stock = Integer.parseInt(request.getParameter("stock"));
-        int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+        try {
+            String codigoArt = request.getParameter("codigo_art");
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 
-        if (cantidad > stock) {
-            agregarMensaje(request, "Stock insuficiente para el artículo.");
-            response.sendRedirect("CarritoController?accion=index");
-            return;
+            Articulo articulo = articuloRepo.findArtByCod(codigoArt);
+            if (articulo == null || cantidad > articulo.getStock()) {
+                agregarMensaje(request, "No se pudo agregar el producto al carrito. Verifica el stock disponible.");
+                response.sendRedirect("carrito?accion=agregar");
+                return;
+            }
+            
+            articulo.setStock(articulo.getStock() - cantidad);
+
+            Renglon renglon = new Renglon(cantidad, articulo);
+            
+            // Obtengo el carrito actual
+            Carrito carritoActual = obtenerCarritoDeSesion(request);
+            
+            // Agrego el nuevo renglon al carrito actual
+            carritoActual.agregar(renglon);
+            
+            response.sendRedirect("carrito?accion=index");
+        } catch (Exception e) {
+        	agregarMensaje(request, "Ocurrió un error al agregar el producto al carrito.");
+            response.sendRedirect("carrito?accion=agregar");
         }
-
-        String codigoArt = request.getParameter("codigo-articulo");
-        String nombre = request.getParameter("nombre");
-        double precio = Double.parseDouble(request.getParameter("precio"));
-        String rubro = request.getParameter("rubro");
-
-        Articulo articulo = new Articulo(codigoArt, nombre, precio, stock, rubro);
-        Renglon renglon = new Renglon(cantidad, articulo);
-
-        Carrito carritoActual = obtenerCarritoDeSesion(request);
-        carritoActual.agregar(renglon);
-
-        agregarMensaje(request, "Producto agregado al carrito exitosamente.");
-        response.sendRedirect("CarritoController?accion=index");
+    
     }
 }
