@@ -42,7 +42,7 @@
             <input type="text" class="form-control" id="rubro" name="rubro" placeholder="Ingrese el rubro del artículo" required>
         </div>
 
-        <button type="submit" class="btn btn-primary">Crear</button>
+        <button type="submit" class="btn btn-success">Crear</button>
     </form>
 </div>
 
