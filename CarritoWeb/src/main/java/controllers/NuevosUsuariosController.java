@@ -14,7 +14,7 @@ import modelos.usuarios.Empleado;
 import modelos.usuarios.UsuarioBase;
 import repositories.UsuarioRepoSingleton;
 
-@WebServlet("/NuevosUsuariosController")
+@WebServlet("/AltaUsuario")
 public class NuevosUsuariosController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -22,6 +22,7 @@ public class NuevosUsuariosController extends HttpServlet {
 	
     public NuevosUsuariosController() {
         super();
+        this.usuarioRepo = UsuarioRepoSingleton.getInstance();
         
     }
 
@@ -42,15 +43,17 @@ public class NuevosUsuariosController extends HttpServlet {
 
 	private void mostrarRegistroUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response);
+		request.getRequestDispatcher("views/usuario/newRegisterForm.jsp").forward(request, response);
 	}
+	
+    /*----------------------DO POST--------------------------*/
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("Sign-in");
+		accion = Optional.ofNullable(accion).orElse("post-create");
 
 		switch (accion) {
-		case "Sign-in" -> registrarUsuario(request, response);
+		case "post-create" -> registrarUsuario(request, response);
 		default -> response.sendError(404);
 		}
 	}
@@ -63,7 +66,9 @@ public class NuevosUsuariosController extends HttpServlet {
 		UsuarioBase nuevoUsuario;
 
 		if ("CLIENTE".equals(tipoUsuario)) {
-			double saldo = Double.parseDouble(request.getParameter("Saldo"));
+			
+			String sSaldo = request.getParameter("saldo");
+			double saldo = Double.parseDouble(sSaldo);
 			nuevoUsuario = new Cliente(nombreUsuario, claveUsuario, saldo); // Crea un usuario que es de tipo CLIENTE
 																			// con saldo
 
@@ -71,12 +76,12 @@ public class NuevosUsuariosController extends HttpServlet {
 			nuevoUsuario = new Empleado(nombreUsuario, claveUsuario);
 		} else {
 			request.setAttribute("error", "Tipo de usuario inválido");
-			request.getRequestDispatcher("error.jsp").forward(request, response);
+			request.getRequestDispatcher("views/usuario/newRegisterForm.jsp").forward(request, response);
 			return;
 		}
 
 		usuarioRepo.addUsuario(nuevoUsuario); // agrega el nuevo usuario
-		response.sendRedirect("UsuarioController?action=Sign-in");
+		response.sendRedirect("AltaUsuario");
 
 	}
 }

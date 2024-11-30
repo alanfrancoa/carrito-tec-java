@@ -56,7 +56,6 @@ public class LoginController extends HttpServlet {
 		accion = Optional.ofNullable(accion).orElse("Log-in");
 
 		switch (accion) {
-		case "Sign-in" -> registrarUsuario(request, response);
 		case "Log-in" -> loginUsuario(request, response);
 		default -> response.sendError(404);
 		}
@@ -87,29 +86,5 @@ public class LoginController extends HttpServlet {
 		}
 
 	}
-	/*----------------------registrarUsuario--------------------------*/
 
-	private void registrarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		String tipoUsuario = request.getParameter("tipoUsuario");
-		String nombreUsuario = request.getParameter("nombreUsuario");
-		String claveUsuario = request.getParameter("claveUsuario");
-
-		UsuarioBase nuevoUsuario;
-
-		if ("CLIENTE".equals(tipoUsuario)) {
-			double saldo = Double.parseDouble(request.getParameter("Saldo"));
-			nuevoUsuario = new Cliente(nombreUsuario, claveUsuario, saldo); // Crea un usuario que es de tipo CLIENTE
-																			// con saldo
-
-		} else {
-			request.setAttribute("error", "Tipo de usuario inválido");
-			request.getRequestDispatcher("error.jsp").forward(request, response);
-			return;
-		}
-
-		usuarioRepo.addUsuario(nuevoUsuario); // agrega el nuevo usuario
-		response.sendRedirect("UsuarioController?action=Log-in");
-
-	}
 }
