@@ -4,21 +4,42 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Cliente</title>
+    <!-- Incluir Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <h1>Bienvenido, ${cliente.nombreUsuario}</h1>
-    <h2>Saldo actual: $ ${cliente.saldo}</h2>
 
+<div class="container mt-5">
+    <h1 class="mb-4">Bienvenido, ${cliente.nombreUsuario}</h1>
+    <h2 class="mb-4">Saldo actual: $ ${cliente.saldo}</h2>
+
+    <!-- Mensaje Condicional -->
     <c:if test="${not empty mensaje}">
-        <p>${mensaje}</p>
+        <div class="alert alert-info" role="alert">
+            ${mensaje}
+        </div>
     </c:if>
 
-    <h3>Opciones:</h3>
-    <ul>
-        <li><a href="ClienteController?action=IngresarSaldo">Ingresar saldo</a></li>
-        <li><a href="ClienteController?action=RetirarSaldo">Retirar saldo</a></li>
-        <li><a href="ClienteController?action=TransferirSaldo">Transferir saldo</a></li>
+    <h3 class="mb-3">Opciones:</h3>
+    <ul class="list-group">
+        <li class="list-group-item">
+            <a href="ClienteController?action=IngresarSaldo" class="btn btn-primary btn-block">Ingresar saldo</a>
+        </li>
+        <li class="list-group-item">
+            <a href="ClienteController?action=RetirarSaldo" class="btn btn-warning btn-block">Retirar saldo</a>
+        </li>
+        <li class="list-group-item">
+            <a href="ClienteController?action=TransferirSaldo" class="btn btn-success btn-block">Transferir saldo</a>
+        </li>
     </ul>
+</div>
+
+<!-- Incluir JavaScript de Bootstrap (opcional para funcionalidades dinámicas) -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 </body>
 </html>
