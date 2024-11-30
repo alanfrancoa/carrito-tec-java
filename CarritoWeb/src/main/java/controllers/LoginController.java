@@ -74,8 +74,17 @@ public class LoginController extends HttpServlet {
 		if (usuarioIngresado != null && usuarioIngresado.getClaveUsuario().equals(claveUsuario)) {
 
 			HttpSession session = request.getSession(); // Crea la sesión para el usuario que se logee
-			session.setAttribute("usuarioLoggeado", usuarioIngresado);
+			session.setAttribute("usuarioLoggeado", usuarioIngresado.getNombreUsuario());
+			
 			if (usuarioIngresado.getTipoUsuario().equals("CLIENTE")) {
+				
+				// Si el tipo de usuario es CLIENTE, hacer casting a Cliente para obtener saldo
+	            Cliente cliente = (Cliente) usuarioIngresado; 
+	            double saldoCliente = cliente.getSaldo();
+
+	            // Puedes almacenar el saldo en la sesión
+	            session.setAttribute("saldoCliente", saldoCliente);
+	            
 				response.sendRedirect("views/usuario/clienteDashboard.jsp");
 			} else {
 				response.sendRedirect("views/usuario/empleadoDashboard.jsp");
