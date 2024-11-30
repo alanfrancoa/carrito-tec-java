@@ -90,7 +90,7 @@ public class ClienteController extends HttpServlet {
             request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
         } else {
             // Si no hay cliente logueado, redirige al formulario de login
-            response.sendRedirect("LoginController?action=Log-in");
+            response.sendRedirect("Login?accion=Login");
         }
     }
 

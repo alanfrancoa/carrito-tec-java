@@ -64,7 +64,7 @@ public class EmpleadoController extends HttpServlet {
     }
 
     private void getEmpleadoDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	 request.getRequestDispatcher("/views/usuario/empleadoDashboard.jsp").forward(request, response);
+    	 request.getRequestDispatcher("views/usuario/empleadoDashboard.jsp").forward(request, response);
 		
 	}
 
@@ -221,6 +221,6 @@ public class EmpleadoController extends HttpServlet {
     private void historialCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Aquí deberías implementar cómo obtener el historial desde tu repositorio o servicio.
         // redirigimos a la vista de historial
-        request.getRequestDispatcher("views/usuario/historialCompras.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/compras/HistorialComprasTotal.jsp").forward(request, response);
     }
 }
