@@ -3,6 +3,10 @@ package modelos.carrito;
 import java.util.ArrayList;
 import java.util.List;
 
+import modelos.compras.Compra;
+import repositories.CompraRepoSingleton;
+
+
 public class Carrito {
 
 	// Singleton para única instancia
@@ -71,4 +75,16 @@ public class Carrito {
 		return total;
 	}
 
+	public Compra confirmarCompra(String nombreCliente, String numeroFactura) {
+        double total = this.verMontoTotal();
+        Compra compra = new Compra(nombreCliente, new ArrayList<>(listaCompra), numeroFactura, total);
+
+        // Guardar la compra en el repositorio
+        CompraRepoSingleton.getInstance().agregarCompra(compra);
+
+        // Vaciar el carrito
+        listaCompra.clear();
+
+        return compra;
+    }
 }
