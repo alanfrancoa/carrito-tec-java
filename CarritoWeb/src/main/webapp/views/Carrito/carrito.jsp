@@ -63,7 +63,7 @@
 				<a href="carrito?accion=agregar" class="btn btn-primary">Agregar
 					Más Productos
 				</a>
-				<a href="carrito?accion=finalizar" class="btn btn-succes">
+				<a href="carrito?accion=finalizar" class="btn btn-success">
 					Finalizar compra
 				</a>
 			</div>
