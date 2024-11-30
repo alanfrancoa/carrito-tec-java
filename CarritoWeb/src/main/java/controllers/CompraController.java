@@ -18,10 +18,6 @@ public class CompraController extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private CompraRepo compraRepo;
 
-    public CompraController() {
-        super();
-        this.compraRepo = CompraRepo.getInstance();
-    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

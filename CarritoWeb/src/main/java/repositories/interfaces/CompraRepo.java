@@ -2,7 +2,6 @@ package repositories.interfaces;
 
 import java.util.List;
 
-import modelos.carrito.Renglon;
 import modelos.compras.Compra;
 
 public interface CompraRepo {
