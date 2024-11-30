@@ -70,5 +70,12 @@ public class UsuarioRepoSingleton implements UsuarioRepo{
     public void limpiarMensajes() {
         mensajes.clear();
     }
+
+
+	@Override
+	public void deleteUsuario(UsuarioBase usuario) {
+	    listaUsuarios.removeIf(u -> u.getNombreUsuario().equals(usuario.getNombreUsuario()));
+	}
+
 	    
 }

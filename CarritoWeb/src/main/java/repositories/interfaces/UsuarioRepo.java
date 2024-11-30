@@ -13,4 +13,5 @@ public interface UsuarioRepo {
 	    //agregar un usuario
 	    public void addUsuario(UsuarioBase nuevoUsuario);
 	    
+	    public void deleteUsuario(UsuarioBase nuevoUsuario);
 }
