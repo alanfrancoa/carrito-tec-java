@@ -14,7 +14,7 @@ import modelos.usuarios.Cliente;
 import modelos.usuarios.UsuarioBase;
 import repositories.UsuarioRepoSingleton;
 
-@WebServlet("/LoginController")
+@WebServlet("/Login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +22,7 @@ public class LoginController extends HttpServlet {
 
 	public LoginController() {
 		super();
+		this.usuarioRepo = UsuarioRepoSingleton.getInstance();
 
 	}
 
@@ -31,10 +32,10 @@ public class LoginController extends HttpServlet {
 			throws ServletException, IOException {
 		
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("Log-in");
+		accion = Optional.ofNullable(accion).orElse("Login");
 
 		switch (accion) {
-		case "Log-in" -> mostrarLoginUsuario(request, response);
+		case "Login" -> mostrarLoginUsuario(request, response);
 
 		default -> response.sendError(404);
 		}
@@ -44,7 +45,7 @@ public class LoginController extends HttpServlet {
 
 	private void mostrarLoginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("views/usuario/loginForm.jsp").forward(request, response); // Redirije a la vista
+		request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response); // Redirije a la vista
 																								// correspondiente
 	}
 
@@ -53,10 +54,10 @@ public class LoginController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("Log-in");
+		accion = Optional.ofNullable(accion).orElse("Auth");
 
 		switch (accion) {
-		case "Log-in" -> loginUsuario(request, response);
+		case "Auth" -> loginUsuario(request, response);
 		default -> response.sendError(404);
 		}
 

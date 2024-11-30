@@ -8,22 +8,33 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
 </head>
-<body class="mt-4">
-
-<h1>¡Bienvenido!</h1>
-
-<form action="" method="post" class="h4 text-left mb-4">
-
-	<p class="h4 text-left mb-4"> 
-		Usuario:<input value="" name= "nombreUsuario"/>
-	</p>
-	<p> 
-		Contraseña:<input value="" name= "claveUsuario"/>
-	</p>
-
-<input type="submit" value="Ingresar">
-
-</form>
-
+<body>
+	<div class="container mt-5">
+	
+		<h1 class="mb-4">¡Bienvenido!</h1>
+		
+		<!-- Formulario de registro -->
+		<form action="Login" method="post" class="h4 text-left mb-4">
+		 	<input type="hidden" value="Auth" name="accion">
+		
+			<div class="mb-3"> 
+				<label class="form-label">
+					Usuario:<input value="" name= "nombreUsuario"/>
+				</label>
+				
+			</div>
+			<div class="mb-3"> 
+				<label class="form-label">
+					Clave:<input type="password" value="" name= "claveUsuario"/>
+				</label>
+				
+			</div>
+		
+		<div>
+			<button type="submit" class="btn btn-primary">Ingresar</button>
+		</div>
+		
+		</form>
+	</div>
 </body>
 </html>
