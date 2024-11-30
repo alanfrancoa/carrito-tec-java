@@ -11,7 +11,7 @@
 <h1>Alta</h1>
 
 <form action="articulos" method="post">
-
+<input type="hidden" value="CrearArticulos" name="accion" />
 	<p> 
 		Codigo:<input value="" name= "codigo"/>
 	</p>

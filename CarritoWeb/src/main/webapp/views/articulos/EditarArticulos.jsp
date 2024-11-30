@@ -10,7 +10,7 @@
 
 <h1> Editar</h1>
 
-<form action="" method="post">
+<form action="articulos" method="post">
 
 	<p> 
 		Codigo:<input value="${articulo.codigo_art }" name= "codigo"/>

@@ -99,6 +99,21 @@ public class ArticuloController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		
+		String accion = request.getParameter("accion");
+		//accion = Optional.ofNullable(accion).orElse("CrearArticulos");
+			
+
+		switch (accion) {
+		case "CrearArticulos" -> postCrearArticulos(request,response);
+						
+		default-> response.sendError(404,"No existe la accion: " +accion);
+			
+		}
+		
+		
+	}
+
+	private void postCrearArticulos(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String codigo = request.getParameter("codigo");
 		
 		String nombre = request.getParameter("nombre");
