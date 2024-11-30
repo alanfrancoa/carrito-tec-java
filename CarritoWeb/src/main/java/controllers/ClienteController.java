@@ -31,7 +31,7 @@ public class ClienteController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         // Obtenemos el parámetro 'accion' de la solicitud. Si no está presente, por defecto es "Dashboard".
-        String accion = request.getParameter("accion");
+        String accion = request.getParameter("action");
         
         accion = Optional.ofNullable(accion).orElse("Dashboard");// Si no se especifica acción, se muestra el dashboard
 
@@ -87,7 +87,7 @@ public class ClienteController extends HttpServlet {
         // Si el cliente está logueado, mostramos su dashboard
         if (cliente != null) {
             request.setAttribute("cliente", cliente); // Pasamos el cliente a la vista
-            request.getRequestDispatcher("views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
+            request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
         } else {
             // Si no hay cliente logueado, redirige al formulario de login
             response.sendRedirect("LoginController?action=Log-in");
@@ -97,19 +97,19 @@ public class ClienteController extends HttpServlet {
     // Método para mostrar el formulario de ingreso de saldo
     private void mostrarIngresarSaldo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("views/usuario/ingresarSaldo.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/usuario/ingresarSaldo.jsp").forward(request, response);
     }
 
     // Método para mostrar el formulario de retiro de saldo
     private void mostrarRetirarSaldo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("views/usuario/retirarSaldo.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/usuario/retirarSaldo.jsp").forward(request, response);
     }
 
     // Método para mostrar el formulario de transferencia de saldo
     private void mostrarTransferirSaldo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("views/usuario/transferirSaldo.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/usuario/transferirSaldo.jsp").forward(request, response);
     }
 
     // Funcionalidad para ingresar saldo en la cuenta del cliente

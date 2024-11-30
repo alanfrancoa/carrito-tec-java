@@ -40,11 +40,14 @@ public class EmpleadoController extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String accion = request.getParameter("accion");
-        accion = (accion != null) ? accion : "listarEmpleados"; // Acción por defecto
+        accion = (accion != null) ? accion : "empleadoDashboard"; 
 
         switch (accion) {
             case "listarEmpleados":
                 listarEmpleados(request, response);
+                break;
+            case "empleadoDashboard":
+                getEmpleadoDashboard(request, response);
                 break;
             case "listarClientes":
                 listarClientes(request, response);
@@ -60,7 +63,12 @@ public class EmpleadoController extends HttpServlet {
         }
     }
 
-    /**
+    private void getEmpleadoDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    	 request.getRequestDispatcher("/views/usuario/empleadoDashboard.jsp").forward(request, response);
+		
+	}
+
+	/**
      * Método que maneja las solicitudes POST.
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -101,7 +109,7 @@ public class EmpleadoController extends HttpServlet {
             .collect(Collectors.toList());
 
         request.setAttribute("empleados", empleados);
-        request.getRequestDispatcher("views/usuario/listarEmpleados.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/usuario/listarEmpleados.jsp").forward(request, response);
     }
 
     // === Métodos relacionados con clientes ===
@@ -112,7 +120,7 @@ public class EmpleadoController extends HttpServlet {
             .collect(Collectors.toList());
 
         request.setAttribute("clientes", clientes);
-        request.getRequestDispatcher("views/usuario/listarClientes.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/usuario/listarClientes.jsp").forward(request, response);
     }
 
     private void crearCliente(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -138,7 +146,7 @@ public class EmpleadoController extends HttpServlet {
         List<Articulo> articulos = articuloRepo.getAllArticulos();
 
         request.setAttribute("articulos", articulos);
-        request.getRequestDispatcher("views/articulos/index.jsp").forward(request, response); // Cambio aquí
+        request.getRequestDispatcher("/views/articulos/index.jsp").forward(request, response); 
     }
 
 
@@ -212,7 +220,7 @@ public class EmpleadoController extends HttpServlet {
     // === Método relacionado con el historial de compras ===
     private void historialCompras(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Aquí deberías implementar cómo obtener el historial desde tu repositorio o servicio.
-        // Por ahora, redirigimos a la vista de historial
+        // redirigimos a la vista de historial
         request.getRequestDispatcher("views/usuario/historialCompras.jsp").forward(request, response);
     }
 }
