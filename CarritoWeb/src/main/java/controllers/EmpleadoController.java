@@ -64,7 +64,7 @@ public class EmpleadoController extends HttpServlet {
     }
 
     private void getEmpleadoDashboard(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	 request.getRequestDispatcher("/views/usuario/empleadoDashboard.jsp").forward(request, response);
+    	 request.getRequestDispatcher("views/usuario/empleadoDashboard.jsp").forward(request, response);
 		
 	}
 
