@@ -35,12 +35,8 @@ public class CompraRepoSingleton implements CompraRepo{
 
     // Obtener compras por cliente
     public List<Compra> obtenerComprasPorCliente(String nombreCliente) {
-        List<Compra> comprasCliente = new ArrayList<>();
-        for (Compra compra : comprasRealizadas) {
-            if (compra.getNombreCliente().equalsIgnoreCase(nombreCliente)) {
-                comprasCliente.add(compra);
-            }
-        }
-        return comprasCliente;
+        return comprasRealizadas.stream()
+                .filter(compra -> compra.getNombreCliente().equalsIgnoreCase(nombreCliente))
+                .toList(); // Devuelve una lista con las compras del cliente.
     }
 }
