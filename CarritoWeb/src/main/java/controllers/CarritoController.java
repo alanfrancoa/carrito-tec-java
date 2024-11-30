@@ -135,7 +135,7 @@ public class CarritoController extends HttpServlet {
         
         request.setAttribute("total", montoFinal);
         
-        request.getRequestDispatcher("/views/carrito/pago.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/carrito/Pago.jsp").forward(request, response);
     }
 
     // ------------------------ DO POST ------------------------ //
