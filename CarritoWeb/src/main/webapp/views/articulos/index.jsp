@@ -21,7 +21,6 @@
 			</tr>
 		</thead>
 	<tbody>
-		
 		<c:forEach var="articulo" items="${listita}">
 			<tr> 
 			<td> <c:out value="${articulo.codigo_art}" /> </td>

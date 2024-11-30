@@ -34,7 +34,7 @@ public class ArticuloController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("Index");
+		accion = Optional.ofNullable(accion).orElse("index");
 		
 		switch (accion) {
 		case "index" -> getIndex(request,response);
@@ -81,12 +81,11 @@ public class ArticuloController extends HttpServlet {
 
 
 	private void getIndex(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-				
+
 		ArticuloRepo repo = ArticulosRepoSingleton.getInstance();
 		
-		List<Articulo> listArt = repo.getAllArticulos();
-		
-		request.setAttribute("listita", listArt);
+		 List<Articulo> listArt = repo.getAllArticulos();
+		 request.setAttribute("listita", listArt);		
 		
 		request.getRequestDispatcher("/views/articulos/index.jsp").forward(request, response);
 
@@ -97,8 +96,28 @@ public class ArticuloController extends HttpServlet {
     /*----------------------DO POST--------------------------*/
 	
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.sendError(400);
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+			throws ServletException, IOException {
+		
+		String codigo = request.getParameter("codigo");
+		
+		String nombre = request.getParameter("nombre");
+		
+		String sPrecio = request.getParameter("precio");
+		double precio = Double.parseDouble(sPrecio);
+		
+		String sStock = request.getParameter("stock");
+		int stock = Integer.parseInt(sStock);
+		
+		String rubro = request.getParameter("rubro");
+		
+		
+		Articulo arti = new Articulo(codigo, nombre, precio, stock, rubro);
+		
+		articulosRepo.createArticulo(arti);
+		
+		response.sendRedirect("articulos");
+		
 	}
 
 }

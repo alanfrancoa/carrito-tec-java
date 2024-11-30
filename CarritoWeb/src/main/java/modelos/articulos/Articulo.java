@@ -36,7 +36,7 @@ public class Articulo {
 		return rubro;
 	}
 
-	public void setcodigo_art(String codigo_art) {
+	public void setCodigo_art(String codigo_art) {
 		this.codigo_art = codigo_art;
 	}
 	public void setNombre(String nombre) {

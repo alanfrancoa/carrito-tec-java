@@ -10,7 +10,7 @@
 
 <h1>Alta</h1>
 
-<form action="" method="post">
+<form action="articulos" method="post">
 
 	<p> 
 		Codigo:<input value="" name= "codigo"/>
