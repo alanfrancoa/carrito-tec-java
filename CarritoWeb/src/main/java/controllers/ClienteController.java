@@ -87,14 +87,14 @@ public class ClienteController extends HttpServlet {
         // Si el cliente está logueado, mostramos su dashboard
         if (cliente != null) {
             request.setAttribute("cliente", cliente); // Pasamos el cliente a la vista
-            request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
+            request.getRequestDispatcher("clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
         } else {
             // Si no hay cliente logueado, redirige al formulario de login
             response.sendRedirect("Login?accion=Login");
         }
     }
 
-    // Método para mostrar el formulario de ingreso de saldo
+ // Método para mostrar el formulario de ingreso de saldo
     private void mostrarIngresarSaldo(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         request.getRequestDispatcher("/views/usuario/ingresarSaldo.jsp").forward(request, response);
@@ -111,6 +111,7 @@ public class ClienteController extends HttpServlet {
             throws ServletException, IOException {
         request.getRequestDispatcher("/views/usuario/transferirSaldo.jsp").forward(request, response);
     }
+
 
     // Funcionalidad para ingresar saldo en la cuenta del cliente
     private void ingresarSaldo(HttpServletRequest request, HttpServletResponse response)

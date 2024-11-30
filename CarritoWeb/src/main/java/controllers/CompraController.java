@@ -14,9 +14,8 @@ import repositories.CompraRepoSingleton;
 import repositories.interfaces.CompraRepo;
 
 /**
- * Controlador para gestionar las acciones relacionadas con las compras.
+ * Controlador para gestionar las acciones de las compras.
  * Mapea las peticiones enviadas a "/CompraController" y delega la lógica
- * correspondiente a los métodos del repositorio de compras.
  */
 @WebServlet("/CompraController")
 public class CompraController extends HttpServlet {
@@ -26,21 +25,13 @@ public class CompraController extends HttpServlet {
     private CompraRepo compraRepo;
 
     /**
-     * Constructor del controlador. Aquí puedes inicializar los objetos necesarios.
-     * Puedes utilizar Dependency Injection si estás trabajando con un framework.
+     * Constructor del controlador.
      */
     public CompraController() {
         super();
         this.compraRepo = CompraRepoSingleton.getInstance(); // Obtener la instancia del repositorio (Singleton)
     }
 
-    /**
-     * Maneja las solicitudes HTTP GET.
-     * Según el parámetro "accion", redirige a los métodos correspondientes.
-     *
-     * @param request  Objeto que contiene los datos de la solicitud HTTP.
-     * @param response Objeto que se utiliza para enviar la respuesta HTTP.
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         // Obtener el parámetro "accion" de la solicitud
