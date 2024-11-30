@@ -8,22 +8,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Factura B</title>
-    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body class="bg-light">
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                
+
                 <div class="bg-white p-4 border rounded shadow">
-                   
+
                     <div class="text-center border-bottom pb-3 mb-4">
                         <h2 class="fw-bold mb-0">Factura B</h2>
-                        <p class="mb-0">Número de Comprobante: <strong>0001-00001234</strong></p>
+                        <p class="mb-0">Número de Comprobante: <strong><c:out value="${numeroFactura}"/></strong></p>
                     </div>
 
-                    
                     <table class="table table-bordered table-striped text-center">
                         <thead class="table-light">
                             <tr>
@@ -36,18 +34,17 @@
                         <tbody>
                             <c:forEach var="item" items="${detalleFactura}">
                                 <tr>
-                                    <td>${item.descripcion}</td>
-                                    <td>${item.cantidad}</td>
-                                    <td>$${item.precioUnitario}</td>
-                                    <td>$${item.total}</td>
+                                    <td><c:out value="${item.producto.nombre}"/></td>
+                                    <td><c:out value="${item.cantidad}"/></td>
+                                    <td><c:out value="${item.producto.precio}"/></td>
+                                    <td><c:out value="${item.total}"/></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
                     </table>
 
-                    
                     <div class="text-end mt-4">
-                        <p class="fs-5 fw-bold">Total Final: $${factura.total}</p>
+                        <p class="fs-5 fw-bold">Total Final: $ <c:out value="${factura.total}"/></p>
                     </div>
                 </div>
 

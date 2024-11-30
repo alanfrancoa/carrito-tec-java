@@ -17,8 +17,8 @@
 
                 <div class="border p-4 rounded shadow-sm text-center">
                     <p class="fs-5">¿Desea ver su factura?</p>
-                    <a href="FacturaController?accion=verFactura" class="btn btn-primary w-100">Ver mi factura</a>
-                </div>
+						<a href="carrito?accion=verFactura" class="btn btn-primary w-100">Ver mi factura</a>
+				</div>
 
                 <div class="mt-3 text-center">
                     <a href="ClienteController?action=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>

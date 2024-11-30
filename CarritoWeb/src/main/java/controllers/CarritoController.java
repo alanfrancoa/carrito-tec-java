@@ -3,6 +3,7 @@ package controllers;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.ServletException;
@@ -79,9 +80,33 @@ public class CarritoController extends HttpServlet {
             case "total" -> mostrarMontoTotal(request, response);
             case "agregar" -> mostrarVistaAgregar(request, response);
             case "finalizar" -> finalizarCompra(request, response);
+            case "verFactura" -> mostrarFactura(request, response); 
             default -> response.sendError(404);
         }
     }
+
+	private void mostrarFactura(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		 HttpSession session = request.getSession();
+		    Carrito carritoActual = (Carrito) session.getAttribute("carrito");
+
+		    if (carritoActual.verCarrito().isEmpty()) {
+		    	 agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
+		            response.sendRedirect("carrito?accion=carrito");
+		            return;
+		    }
+
+		    String numeroFactura = generarNumeroFactura();
+
+		    double total = carritoActual.verMontoTotal();
+		    List<Renglon> detalleFactura = carritoActual.verCarrito();
+
+		    request.setAttribute("numeroFactura", numeroFactura);
+		    request.setAttribute("detalleFactura", detalleFactura);
+		    request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
+
+		    request.getRequestDispatcher("/views/carrito/Factura.jsp").forward(request, response);
+		    return;
+	}
 
 	// Métodos para manejar el carrito
     private void mostrarCarrito(HttpServletRequest request, HttpServletResponse response)
