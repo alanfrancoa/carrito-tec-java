@@ -30,10 +30,11 @@ public class NuevosUsuariosController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("Sign-in");
+		
+		accion = Optional.ofNullable(accion).orElse("signin");
 		
 		switch(accion) {
-		case "Sign-in" -> mostrarRegistroUsuario(request, response);
+		case "signin" -> mostrarRegistroUsuario(request, response);
 		
 		default -> response.sendError(404);
 		}
@@ -43,22 +44,23 @@ public class NuevosUsuariosController extends HttpServlet {
 
 	private void mostrarRegistroUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		request.getRequestDispatcher("views/usuario/newRegisterForm.jsp").forward(request, response);
+		request.getRequestDispatcher("/views/usuario/newRegisterForm.jsp").forward(request, response);
 	}
 	
     /*----------------------DO POST--------------------------*/
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String accion = request.getParameter("accion");
-		accion = Optional.ofNullable(accion).orElse("post-create");
+		accion = Optional.ofNullable(accion).orElse("create");
 
 		switch (accion) {
-		case "post-create" -> registrarUsuario(request, response);
+		case "create" -> registrarUsuario(request, response);
 		default -> response.sendError(404);
 		}
 	}
 
 	private void registrarUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		String tipoUsuario = request.getParameter("tipoUsuario");
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String claveUsuario = request.getParameter("claveUsuario");
@@ -81,7 +83,7 @@ public class NuevosUsuariosController extends HttpServlet {
 		}
 
 		usuarioRepo.addUsuario(nuevoUsuario); // agrega el nuevo usuario
-		response.sendRedirect("AltaUsuario");
+		response.sendRedirect("views/usuario/empleadoDashboard.jsp");
 
 	}
 }
