@@ -98,13 +98,14 @@ public class CarritoController extends HttpServlet {
             response.sendRedirect("CarritoController?accion=index");
             return;
         }
-
+        
+        
         double montoFinal = carritoActual.verMontoTotal();
         for (Renglon renglon : carritoActual.verCarrito()) {
             Articulo articulo = renglon.getProducto();
             articulo.setStock(articulo.getStock() - renglon.getCantidad());
         }
-
+        
         carritoActual.finalizarCompra();
         agregarMensaje(request, "Compra finalizada con éxito. Monto total: " + montoFinal);
         response.sendRedirect("CarritoController?accion=index");

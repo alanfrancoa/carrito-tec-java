@@ -9,6 +9,9 @@ public interface CarritoRepo {
 
 	void agregar(Renglon nuevoRenglon);
 	List<Renglon> verCarrito();
+	List<Carrito> getHistorialVentas();
 	double verMontoTotal();
 	double finalizarCompra();
+	void agregarVenta(Carrito venta);
+
 }
