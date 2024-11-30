@@ -122,7 +122,14 @@ public class ArticuloController extends HttpServlet {
 		
 	}
 
-	private void postEliminarArticulos(HttpServletRequest request, HttpServletResponse response) {
+	private void postEliminarArticulos(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String codigo = request.getParameter("codigo");
+		
+		articulosRepo.deleteArticulo(codigo);
+		
+		response.sendRedirect("articulos");
+		
+		
 		
 	}
 

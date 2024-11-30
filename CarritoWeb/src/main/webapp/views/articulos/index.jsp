@@ -29,9 +29,9 @@
 			<td> <c:out value="${articulo.stock}" /> </td>
 			<td> <c:out value="${articulo.rubro}" /> </td>
 			
+			<td> <a href="articulos?accion=MostrarArticulos&codigo_art=${articulo.codigo_art}"> Ver</td> </a>
 			<td> <a href="articulos?accion=EditarArticulos&codigo_art=${articulo.codigo_art}"> Editar</td> </a>
-			<td> <a href="#"> Eliminar</td> </a>
-			
+						
 			</tr>
 		</c:forEach>
 	</tbody>

@@ -16,5 +16,13 @@
 <p> Rubro: <c:out value="${articulo.rubro }"/> </p>
 
 
+<form action="articulos" method="post">
+<input type="hidden" name ="codigo" value="${articulo.codigo_art}">
+<input type="hidden" name="accion" value="EliminarArticulos">
+
+<input type="submit" value="Eliminar articulo">
+
+</form>
+
 </body>
 </html>
