@@ -14,15 +14,9 @@
     <div class="row justify-content-center">
         <div class="col-md-6 col-lg-4">
             <h2 class="mb-4 text-center">¿Desea confirmar su pago?</h2>
-
             
             <div class="border p-4 rounded shadow-sm">
                 <form action="carrito?accion=finalizar" method="POST"> 
-
-                    <div class="mb-3">
-                        <label class="form-label">Saldo Actual:</label>
-                        <p class="form-control-plaintext"><c:out value="${cliente.getSaldo}"/></p>
-                    </div>
                     
                     <div class="mb-3">
                         <label class="form-label">Total:</label>
@@ -36,7 +30,7 @@
             </div>
             
             <div class="mt-3 text-center">
-                <a href="ClienteController?action=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
+                <a href="carrito?action=index" class="btn btn-secondary w-100">Volver al Dashboard</a>
             </div>
         </div>
     </div>
