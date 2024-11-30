@@ -17,7 +17,7 @@
 
             
             <div class="border p-4 rounded shadow-sm">
-                <form action="CarritoController?accion=finalizar" method="POST"> 
+                <form action="CarritoController?accion=finalizarCompra" method="POST"> 
 
                     <div class="mb-3">
                         <label class="form-label">Saldo Actual:</label>
