@@ -7,7 +7,7 @@ import modelos.compras.Compra;
 
 public interface CompraRepo {
 	void agregarCompra(Compra compra);
-	List<Renglon>obtenerTodasLasCompras();
+	List<Compra>obtenerTodasLasCompras();
 	List<Compra> obtenerComprasPorCliente(String nombreCliente);
 	
 }
