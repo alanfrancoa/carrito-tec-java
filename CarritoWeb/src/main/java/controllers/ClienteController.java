@@ -87,7 +87,7 @@ public class ClienteController extends HttpServlet {
         // Si el cliente está logueado, mostramos su dashboard
         if (cliente != null) {
             request.setAttribute("cliente", cliente); // Pasamos el cliente a la vista
-            request.getRequestDispatcher("clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
+            request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige a la vista del dashboard
         } else {
             // Si no hay cliente logueado, redirige al formulario de login
             response.sendRedirect("Login?accion=Login");
@@ -118,7 +118,8 @@ public class ClienteController extends HttpServlet {
             throws ServletException, IOException {
         // Obtenemos la sesión del cliente
         HttpSession session = request.getSession();
-        Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
+        Cliente cliente = (Cliente) request.getSession().getAttribute("cliente");
+
 
         // Verificamos si el cliente está logueado
         if (cliente != null) {
