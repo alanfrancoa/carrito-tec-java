@@ -12,8 +12,8 @@
 <body>
 
 <div class="container mt-5">
-    <h1 class="mb-4">Bienvenido, <c:out value="${sessionScope.usuarioLoggeado}"/></h1>
-    <h3>Saldo: $<c:out value="${sessionScope.saldoCliente}"/></h3>
+    <h1 class="mb-4">Bienvenido, <c:out value="${sessionScope.usuarioLoggeado.getNombreUsuario()}"/></h1>
+    <h3>Saldo: $<c:out value="${sessionScope.usuarioLoggeado.getSaldo()}"/></h3>
 
     <!-- Mensaje Condicional -->
     <c:if test="${not empty mensaje}">
