@@ -73,8 +73,8 @@ public class LoginController extends HttpServlet {
 
 		if (usuarioIngresado != null && usuarioIngresado.getClaveUsuario().equals(claveUsuario)) {
 
-			HttpSession session = request.getSession(); // Crea la sesión para el usuario que se logee
-			session.setAttribute("usuarioLoggeado", usuarioIngresado.getNombreUsuario());
+			HttpSession session = request.getSession(); // Crea la sesión para el usuario que se logee y guardamos el usuario.
+			session.setAttribute("usuarioLoggeado", usuarioIngresado);
 			
 			if (usuarioIngresado.getTipoUsuario().equals("CLIENTE")) {
 				
