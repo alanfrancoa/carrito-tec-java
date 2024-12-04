@@ -83,6 +83,8 @@ public class ClienteController extends HttpServlet {
         // Obtenemos la sesión del usuario logueado
         HttpSession session = request.getSession();
         Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
+        
+        System.out.println(cliente);
 
         // Si el cliente está logueado, mostramos su dashboard
         if (cliente != null) {
@@ -118,7 +120,7 @@ public class ClienteController extends HttpServlet {
             throws ServletException, IOException {
         // Obtenemos la sesión del cliente
         HttpSession session = request.getSession();
-        Cliente cliente = (Cliente) request.getSession().getAttribute("cliente");
+        Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
 
 
         // Verificamos si el cliente está logueado
