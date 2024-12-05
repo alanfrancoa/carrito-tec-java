@@ -12,8 +12,8 @@
 <body>
 
 <div class="container mt-5">
-    <h1 class="mb-4">Bienvenido, <c:out value="${sessionScope.usuarioLoggeado.getNombreUsuario()}"/></h1>
-    <h3>Saldo: $<c:out value="${sessionScope.usuarioLoggeado.getSaldo()}"/></h3>
+    <h1 class="mb-4">Bienvenido, <c:out value="${sessionScope.cliente.getNombreUsuario()}"/></h1>
+    <h3>Saldo: $<c:out value="${sessionScope.cliente.getSaldo()}"/></h3>
 
     <!-- Mensaje Condicional -->
     <c:if test="${not empty mensaje}">
@@ -25,14 +25,14 @@
     <h3 class="mb-3">Opciones:</h3>
     <ul class="list-group">
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/ClienteController?action=IngresarSaldo" class="btn btn-primary btn-block">Ingresar saldo</a>
+            <a href="${pageContext.request.contextPath}/cliente?action=IngresarSaldo" class="btn btn-primary btn-block">Ingresar saldo</a>
 
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/ClienteController?action=RetirarSaldo" class="btn btn-warning btn-block">Retirar saldo</a>
+            <a href="${pageContext.request.contextPath}/cliente?action=RetirarSaldo" class="btn btn-warning btn-block">Retirar saldo</a>
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/ClienteController?action=TransferirSaldo" class="btn btn-success btn-block">Transferir saldo</a>
+            <a href="${pageContext.request.contextPath}/client?action=TransferirSaldo" class="btn btn-success btn-block">Transferir saldo</a>
         </li>
     </ul>
 </div>
