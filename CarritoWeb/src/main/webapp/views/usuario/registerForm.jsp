@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,6 +38,11 @@
                     <button type="submit" class="btn btn-primary w-100">Ingresar</button>
                 </div>
             </form>
+            <c:if test="${param.error != null}">
+				<div class="alert alert-danger mt-3">
+					<strong>Error!</strong> ${param.error}
+				</div>
+			</c:if>
         </div>
     </div>
 </div>
