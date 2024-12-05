@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		
+
 		String accion = request.getParameter("accion");
 		accion = Optional.ofNullable(accion).orElse("Login");
 
@@ -41,12 +41,11 @@ public class LoginController extends HttpServlet {
 		}
 	}
 
-	
-
 	private void mostrarLoginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response); // Redirije a la vista
-																								// correspondiente
+		request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response); // Redirije a la
+																									// vista
+																									// correspondiente
 	}
 
 	/*----------------------DO POST--------------------------*/
@@ -64,7 +63,8 @@ public class LoginController extends HttpServlet {
 	}
 
 	/*----------------------loginUsuario--------------------------*/
-	private void loginUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void loginUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String claveUsuario = request.getParameter("claveUsuario");
 
@@ -73,26 +73,32 @@ public class LoginController extends HttpServlet {
 
 		if (usuarioIngresado != null && usuarioIngresado.getClaveUsuario().equals(claveUsuario)) {
 
-			HttpSession session = request.getSession(); // Crea la sesión para el usuario que se logee y guardamos el usuario.
-			session.setAttribute("usuarioLoggeado", usuarioIngresado);
-			
-			if (usuarioIngresado.getTipoUsuario().equals("CLIENTE")) {
-				
-				// Si el tipo de usuario es CLIENTE, hacer casting a Cliente para obtener saldo
-	            Cliente cliente = (Cliente) usuarioIngresado; 
-	            double saldoCliente = cliente.getSaldo();
+			String tipoUsuario = usuarioIngresado.getTipoUsuario();
 
-	            // Puedes almacenar el saldo en la sesión
-	            session.setAttribute("saldoCliente", saldoCliente);
-	            
-				response.sendRedirect("views/usuario/clienteDashboard.jsp");
-			} else {
-				response.sendRedirect("views/usuario/empleadoDashboard.jsp");
+			if ("CLIENTE".equals(tipoUsuario)) {
+
+				HttpSession session = request.getSession();
+				
+				Cliente cliente = (Cliente) usuarioIngresado;
+
+				session.setAttribute("cliente", cliente);
+
+				response.sendRedirect(request.getContextPath() + "/views/usuario/clienteDashboard.jsp");
+
+			} else if ("EMPLEADO".equals(tipoUsuario)) {
+				
+				// Guardamos el usuario en la sesión
+				HttpSession session = request.getSession();
+
+				// Le pasamos el usuario encontrado
+				session.setAttribute("usuario", usuarioIngresado);
+				
+				response.sendRedirect(request.getContextPath() + "/views/usuario/empleadoDashboard.jsp");
 			}
 
 		} else {
-			request.setAttribute("error", "Usuario o clave incorrectos");
-	        request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response);
+			// Si el usuario no existe o la contraseña es incorrecta, que nos muestre un mensaje de error
+			response.sendRedirect("Login?error=Usuario o clave incorrectos");
 		}
 
 	}
