@@ -15,7 +15,7 @@
     <h1 class="mb-4">Ingresar Saldo</h1>
     
     <!-- Formulario de ingreso de saldo -->
-    <form action="${pageContext.request.contextPath}/ClienteController" method="post">
+    <form action="${pageContext.request.contextPath}/cliente" method="post">
         <input type="hidden" name="accion" value="IngresarSaldo" />
         
         <div class="form-group">
@@ -28,7 +28,7 @@
     
     <!-- Enlace para volver al dashboard -->
     <div class="mt-3">
-        <a href="${pageContext.request.contextPath}/ClienteController?action=Dashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
+        <a href="${pageContext.request.contextPath}/cliente?action=Dashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
 
     </div>
 </div>
