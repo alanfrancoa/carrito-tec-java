@@ -21,7 +21,6 @@ public class LoginController extends HttpServlet {
 	private UsuarioRepoSingleton usuarioRepo;
 
 	public LoginController() {
-		super();
 		this.usuarioRepo = UsuarioRepoSingleton.getInstance();
 
 	}
@@ -36,14 +35,13 @@ public class LoginController extends HttpServlet {
 
 		switch (accion) {
 		case "Login" -> mostrarLoginUsuario(request, response);
-
 		default -> response.sendError(404);
 		}
 	}
 
 	private void mostrarLoginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("views/usuario/registerForm.jsp").forward(request, response); // Redirije a la
+		request.getRequestDispatcher("/views/usuario/registerForm.jsp").forward(request, response); // Redirije a la
 																									// vista
 																									// correspondiente
 	}
@@ -65,23 +63,24 @@ public class LoginController extends HttpServlet {
 	/*----------------------loginUsuario--------------------------*/
 	private void loginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
+		// Tomamos los valores del input del JSP
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String claveUsuario = request.getParameter("claveUsuario");
 
-		UsuarioBase usuarioIngresado = usuarioRepo.getUsuario(nombreUsuario); // se usa el repo singleton para buscar el
-																				// nombre de usuario
+		// Buscamos el usuario
+		UsuarioBase usuarioEncontrado = usuarioRepo.getAllUsuarios().stream()
+				.filter(u -> u.getNombreUsuario().equals(nombreUsuario)).findFirst().orElse(null);
+		
+		if (usuarioEncontrado != null && usuarioEncontrado.getClaveUsuario().equals(claveUsuario)) {
 
-		if (usuarioIngresado != null && usuarioIngresado.getClaveUsuario().equals(claveUsuario)) {
-
-			String tipoUsuario = usuarioIngresado.getTipoUsuario();
+			String tipoUsuario = usuarioEncontrado.getTipoUsuario();
 
 			if ("CLIENTE".equals(tipoUsuario)) {
 
 				HttpSession session = request.getSession();
 				
-				Cliente cliente = (Cliente) usuarioIngresado;
-
-				session.setAttribute("cliente", cliente);
+				session.setAttribute("usuario", usuarioEncontrado);
 
 				response.sendRedirect(request.getContextPath() + "/views/usuario/clienteDashboard.jsp");
 
@@ -91,7 +90,7 @@ public class LoginController extends HttpServlet {
 				HttpSession session = request.getSession();
 
 				// Le pasamos el usuario encontrado
-				session.setAttribute("usuario", usuarioIngresado);
+				session.setAttribute("usuario", usuarioEncontrado);
 				
 				response.sendRedirect(request.getContextPath() + "/views/usuario/empleadoDashboard.jsp");
 			}

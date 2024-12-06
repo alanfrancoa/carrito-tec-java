@@ -14,6 +14,7 @@ import decorators.SessionDecorator;
 import exceptions.UsuarioDeslogueadoException;
 import interfaces.Usuario;
 import modelos.usuarios.Cliente;
+import modelos.usuarios.UsuarioBase;
 import repositories.ClienteRepoSingleton;
 
 @WebServlet("/cliente")
@@ -25,7 +26,6 @@ public class ClienteController extends HttpServlet {
 
 	// Constructor del servlet
 	public ClienteController() {
-		super();
 		// Inicializamos el repositorio de clientes
 		this.clienteRepo = ClienteRepoSingleton.getInstance();
 	}
@@ -42,7 +42,7 @@ public class ClienteController extends HttpServlet {
 
 		try {
 
-			Usuario usuario = sessionDec.getUsuarioLogueado();
+			UsuarioBase usuario = sessionDec.getUsuarioLogueado();
 
 			// Verificamos si el usuario está logueado
 			if (usuario == null || !"CLIENTE".equals(usuario.getTipoUsuario())) {
@@ -91,13 +91,28 @@ public class ClienteController extends HttpServlet {
 		// Según la acción solicitada, se llama al método correspondiente
 		switch (accion) {
 		case "IngresarSaldo": // Llama al método para ingresar saldo
-			ingresarSaldo(request, response);
+			try {
+				ingresarSaldo(request, response);
+			} catch (UsuarioDeslogueadoException e) {
+				// Manejo de la excepción, por ejemplo redirigiendo al login
+				response.sendRedirect("Login?accion=Auth");
+			}
 			break;
 		case "RetirarSaldo": // Llama al método para retirar saldo
-			retirarSaldo(request, response);
+			try {
+				retirarSaldo(request, response);
+			} catch (UsuarioDeslogueadoException e) {
+				// Manejo de la excepción, por ejemplo redirigiendo al login
+				response.sendRedirect("Login?accion=Auth");
+			}
 			break;
 		case "TransferirSaldo": // Llama al método para transferir saldo
-			transferirSaldo(request, response);
+			try {
+				transferirSaldo(request, response);
+			} catch (UsuarioDeslogueadoException e) {
+				// Manejo de la excepción, por ejemplo redirigiendo al login
+				response.sendRedirect("Login?accion=Auth");
+			}
 			break;
 		default: // Si no se encuentra una acción válida, se responde con error 404
 			response.sendError(404);
@@ -106,24 +121,24 @@ public class ClienteController extends HttpServlet {
 
 	// Método para mostrar el dashboard del cliente (incluso su saldo y nombre)
 	private void mostrarDashboard(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, UsuarioDeslogueadoException {
+
 		// Obtenemos la sesión del usuario logueado
 		HttpSession session = request.getSession();
-		Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
 
-		System.out.println(cliente);
+		SessionDecorator sessionDec = new SessionDecorator(session);
 
-		// Si el cliente está logueado, mostramos su dashboard
-		if (cliente != null) {
-			request.setAttribute("cliente", cliente); // Pasamos el cliente a la vista
-			request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response); // Redirige
-																											// a la
-																											// vista del
-																											// dashboard
-		} else {
-			// Si no hay cliente logueado, redirige al formulario de login
-			response.sendRedirect("Login?accion=Login");
-		}
+		// Obtenemos el usuario logeado
+		UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
+
+		Cliente cliente = (Cliente) usuarioLog;
+
+		// Pasamos los datos para la vista del dashboard
+		session.setAttribute("usuario", cliente);
+
+		// Nos redirijimos al dashboard
+		request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response);
+
 	}
 
 	// Método para mostrar el formulario de ingreso de saldo
@@ -146,10 +161,16 @@ public class ClienteController extends HttpServlet {
 
 	// Funcionalidad para ingresar saldo en la cuenta del cliente
 	private void ingresarSaldo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, UsuarioDeslogueadoException {
 		// Obtenemos la sesión del cliente
 		HttpSession session = request.getSession();
-		Cliente cliente = (Cliente) session.getAttribute("cliente");
+
+		SessionDecorator sessionDec = new SessionDecorator(session);
+
+		// Obtenemos el usuario logeado
+		UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
+
+		Cliente cliente = (Cliente) usuarioLog;
 
 		// Verificamos si el cliente está logueado
 		if (cliente != null) {
@@ -159,20 +180,25 @@ public class ClienteController extends HttpServlet {
 			cliente.ingresarSaldo(saldo);
 			// Mostramos un mensaje de éxito y redirigimos al dashboard
 			request.setAttribute("mensaje", "Saldo ingresado correctamente.");
-			mostrarDashboard(request, response);
+			response.sendRedirect("cliente/Dashboard");
+			return;
 		} else {
-			// Si no hay cliente logueado, redirigimos al login
-			response.sendRedirect("LoginController?action=Log-in");
+			response.sendRedirect("Login?accion=Auth");
 		}
 	}
 
 	// Funcionalidad para retirar saldo de la cuenta del cliente
 	private void retirarSaldo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+			throws ServletException, IOException, UsuarioDeslogueadoException {
 		// Obtenemos la sesión del cliente
 		HttpSession session = request.getSession();
-		Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
 
+		SessionDecorator sessionDec = new SessionDecorator(session);
+
+		// Obtenemos el usuario logeado
+		UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
+
+		Cliente cliente = (Cliente) usuarioLog;
 		// Verificamos si el cliente está logueado
 		if (cliente != null) {
 			// Obtenemos el saldo a retirar desde el formulario
@@ -181,23 +207,32 @@ public class ClienteController extends HttpServlet {
 			if (cliente.retirarSaldo(saldo)) {
 				// Mostramos un mensaje de éxito
 				request.setAttribute("mensaje", "Saldo retirado correctamente.");
+				response.sendRedirect("cliente/Dashboard");
+				return;
 			} else {
 				// Si el cliente no tiene suficiente saldo, mostramos un mensaje de error
 				request.setAttribute("mensaje", "No tiene suficiente saldo.");
+				return;
 			}
-			mostrarDashboard(request, response);
+
 		} else {
 			// Si no hay cliente logueado, redirigimos al login
-			response.sendRedirect("LoginController?action=Log-in");
+			response.sendRedirect("Login?accion=Auth");
 		}
 	}
 
 	// Funcionalidad para transferir saldo a otro cliente
 	private void transferirSaldo(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// Obtenemos la sesión del cliente
+			throws ServletException, IOException, UsuarioDeslogueadoException {
+		/// Obtenemos la sesión del cliente
 		HttpSession session = request.getSession();
-		Cliente cliente = (Cliente) session.getAttribute("usuarioLoggeado");
+
+		SessionDecorator sessionDec = new SessionDecorator(session);
+
+		// Obtenemos el usuario logeado
+		UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
+
+		Cliente cliente = (Cliente) usuarioLog;
 
 		// Verificamos si el cliente está logueado
 		if (cliente != null) {
@@ -212,14 +247,17 @@ public class ClienteController extends HttpServlet {
 			if (clienteDestino != null && cliente.transferirSaldo(clienteDestino, monto)) {
 				// Mostramos un mensaje de éxito
 				request.setAttribute("mensaje", "Transferencia realizada correctamente.");
+				response.sendRedirect("cliente/Dashboard");
+				return;
 			} else {
 				// Si no se pudo realizar la transferencia, mostramos un mensaje de error
 				request.setAttribute("mensaje", "No se pudo realizar la transferencia.");
+				return;
 			}
-			mostrarDashboard(request, response);
+
 		} else {
 			// Si no hay cliente logueado, redirigimos al login
-			response.sendRedirect("LoginController?action=Log-in");
+			response.sendRedirect("Login?accion=Auth");
 		}
 	}
 }

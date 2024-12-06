@@ -6,6 +6,7 @@ import javax.servlet.http.HttpSession;
 
 import exceptions.UsuarioDeslogueadoException;
 import interfaces.Usuario;
+import modelos.usuarios.UsuarioBase;
 
 public class SessionDecorator {
 
@@ -17,22 +18,29 @@ public class SessionDecorator {
 	}
 
 	// Metodo para obtener el usuario logueado
-	public Usuario getUsuarioLogueado() throws UsuarioDeslogueadoException {
+	public UsuarioBase getUsuarioLogueado() throws UsuarioDeslogueadoException {
 
-		Usuario usuarioNullable = (Usuario) session.getAttribute("usuario");
+		UsuarioBase usuarioNullable = (UsuarioBase) session.getAttribute("usuario");
 
-		Usuario usuarioLog = Optional.ofNullable(usuarioNullable).orElseThrow(() -> new UsuarioDeslogueadoException());
+		UsuarioBase usuarioLog = Optional.ofNullable(usuarioNullable).orElseThrow(() -> new UsuarioDeslogueadoException());
 
 		return usuarioLog;
 	}
 
-	// Metodos para validar el tipo de cliente
-	public boolean esCliente() throws UsuarioDeslogueadoException {
-		return "CLIENTE".equals(this.getUsuarioLogueado().getTipoUsuario());
+	public boolean esCliente() {
+	    try {
+	        return "CLIENTE".equals(this.getUsuarioLogueado().getTipoUsuario());
+	    } catch (UsuarioDeslogueadoException e) {
+	        return false; // o manejar el error de otra manera según la lógica de tu aplicación
+	    }
 	}
 
-	public boolean esEmpleado() throws UsuarioDeslogueadoException {
-		return "EMPLEADO".equals(this.getUsuarioLogueado().getTipoUsuario());
+	public boolean esEmpleado() {
+	    try {
+	        return "EMPLEADO".equals(this.getUsuarioLogueado().getTipoUsuario());
+	    } catch (UsuarioDeslogueadoException e) {
+	        return false; // o manejar el error de otra manera
+	    }
 	}
 
 }
