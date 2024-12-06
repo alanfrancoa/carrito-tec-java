@@ -25,14 +25,14 @@
     <h3 class="mb-3">Opciones:</h3>
     <ul class="list-group">
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/cliente?action=IngresarSaldo" class="btn btn-primary btn-block">Ingresar saldo</a>
+            <a href="${pageContext.request.contextPath}/cliente?accion=IngresarSaldo" class="btn btn-primary btn-block">Ingresar saldo</a>
 
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/cliente?action=RetirarSaldo" class="btn btn-warning btn-block">Retirar saldo</a>
+            <a href="${pageContext.request.contextPath}/cliente?accion=RetirarSaldo" class="btn btn-warning btn-block">Retirar saldo</a>
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/cliente?action=TransferirSaldo" class="btn btn-success btn-block">Transferir saldo</a>
+            <a href="${pageContext.request.contextPath}/cliente?accion=TransferirSaldo" class="btn btn-success btn-block">Transferir saldo</a>
         </li>
     </ul>
 </div>

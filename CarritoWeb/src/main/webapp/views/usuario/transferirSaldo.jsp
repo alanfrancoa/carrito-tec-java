@@ -18,7 +18,7 @@
             <h1 class="mb-4 text-center">Transferir Saldo</h1>
 
             <!-- Formulario para transferir saldo -->
-            <form action="ClienteController" method="post" class="border p-4 rounded shadow-sm">
+            <form action="${pageContext.request.contextPath}/cliente" method="post" class="border p-4 rounded shadow-sm">
                 <input type="hidden" name="accion" value="TransferirSaldo" />
 
                 <!-- Campo de usuario destinatario -->
@@ -41,7 +41,7 @@
 
             <!-- Enlace para volver al dashboard -->
             <div class="mt-3 text-center">
-                <a href="ClienteController?action=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
+                <a href="cliente?accion=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
             </div>
         </div>
     </div>

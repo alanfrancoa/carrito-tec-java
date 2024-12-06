@@ -134,7 +134,7 @@ public class ClienteController extends HttpServlet {
 		Cliente cliente = (Cliente) usuarioLog;
 
 		// Pasamos los datos para la vista del dashboard
-		session.setAttribute("usuario", cliente);
+		session.setAttribute("cliente", cliente);
 
 		// Nos redirijimos al dashboard
 		request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response);
@@ -180,7 +180,7 @@ public class ClienteController extends HttpServlet {
 			cliente.ingresarSaldo(saldo);
 			// Mostramos un mensaje de éxito y redirigimos al dashboard
 			request.setAttribute("mensaje", "Saldo ingresado correctamente.");
-			response.sendRedirect("cliente/Dashboard");
+			response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 			return;
 		} else {
 			response.sendRedirect("Login?accion=Auth");
@@ -207,11 +207,12 @@ public class ClienteController extends HttpServlet {
 			if (cliente.retirarSaldo(saldo)) {
 				// Mostramos un mensaje de éxito
 				request.setAttribute("mensaje", "Saldo retirado correctamente.");
-				response.sendRedirect("cliente/Dashboard");
+				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			} else {
 				// Si el cliente no tiene suficiente saldo, mostramos un mensaje de error
 				request.setAttribute("mensaje", "No tiene suficiente saldo.");
+				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			}
 
@@ -247,11 +248,12 @@ public class ClienteController extends HttpServlet {
 			if (clienteDestino != null && cliente.transferirSaldo(clienteDestino, monto)) {
 				// Mostramos un mensaje de éxito
 				request.setAttribute("mensaje", "Transferencia realizada correctamente.");
-				response.sendRedirect("cliente/Dashboard");
+				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			} else {
 				// Si no se pudo realizar la transferencia, mostramos un mensaje de error
 				request.setAttribute("mensaje", "No se pudo realizar la transferencia.");
+				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			}
 
