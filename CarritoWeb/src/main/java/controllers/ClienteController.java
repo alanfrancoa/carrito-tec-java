@@ -179,7 +179,7 @@ public class ClienteController extends HttpServlet {
 			// Llamamos al método de la clase Cliente para ingresar el saldo
 			cliente.ingresarSaldo(saldo);
 			// Mostramos un mensaje de éxito y redirigimos al dashboard
-			request.setAttribute("mensaje", "Saldo ingresado correctamente.");
+			session.setAttribute("mensaje", "Saldo ingresado correctamente.");
 			response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 			return;
 		} else {
@@ -206,13 +206,15 @@ public class ClienteController extends HttpServlet {
 			// Verificamos si el cliente tiene suficiente saldo para realizar el retiro
 			if (cliente.retirarSaldo(saldo)) {
 				// Mostramos un mensaje de éxito
-				request.setAttribute("mensaje", "Saldo retirado correctamente.");
+				session.setAttribute("mensaje", "Saldo retirado correctamente.");
 				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
+				
 				return;
 			} else {
 				// Si el cliente no tiene suficiente saldo, mostramos un mensaje de error
-				request.setAttribute("mensaje", "No tiene suficiente saldo.");
+				session.setAttribute("mensaje", "No tiene suficiente saldo.");
 				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
+				
 				return;
 			}
 
@@ -247,12 +249,12 @@ public class ClienteController extends HttpServlet {
 			// ambos clientes en el repositorio
 			if (clienteDestino != null && cliente.transferirSaldo(clienteDestino, monto)) {
 				// Mostramos un mensaje de éxito
-				request.setAttribute("mensaje", "Transferencia realizada correctamente.");
+				session.setAttribute("mensaje", "Transferencia realizada correctamente.");
 				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			} else {
 				// Si no se pudo realizar la transferencia, mostramos un mensaje de error
-				request.setAttribute("mensaje", "No se pudo realizar la transferencia.");
+				session.setAttribute("mensaje", "No se pudo realizar la transferencia.");
 				response.sendRedirect(request.getContextPath() + "/cliente?accion=Dashboard");
 				return;
 			}
