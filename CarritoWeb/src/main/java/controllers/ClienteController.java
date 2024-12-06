@@ -134,7 +134,7 @@ public class ClienteController extends HttpServlet {
 		Cliente cliente = (Cliente) usuarioLog;
 
 		// Pasamos los datos para la vista del dashboard
-		session.setAttribute("cliente", cliente);
+		session.setAttribute("usuario", cliente);
 
 		// Nos redirijimos al dashboard
 		request.getRequestDispatcher("/views/usuario/clienteDashboard.jsp").forward(request, response);

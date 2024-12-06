@@ -76,11 +76,11 @@ public class LoginController extends HttpServlet {
 
 			String tipoUsuario = usuarioEncontrado.getTipoUsuario();
 
-			if ("CLIENTE".equals(tipoUsuario)) {
+			if (usuarioEncontrado instanceof Cliente cliente) {
 
 				HttpSession session = request.getSession();
 				
-				session.setAttribute("usuario", usuarioEncontrado);
+				session.setAttribute("usuario", cliente);
 
 				response.sendRedirect(request.getContextPath() + "/views/usuario/clienteDashboard.jsp");
 

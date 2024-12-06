@@ -17,11 +17,11 @@
 	<div class="container mt-5">
 		<h1 class="mb-4">
 			Bienvenido,
-			<c:out value="${sessionScope.cliente.getNombreUsuario()}" />
+			<c:out value="${sessionScope.usuario.getNombreUsuario()}" />
 		</h1>
 		<h3>
 			Saldo: $
-			<c:out value="${sessionScope.cliente.getSaldo()}" />
+			<c:out value="${sessionScope.usuario.getSaldo()}" />
 		</h3>
 
 		<!-- Mensaje Condicional -->
