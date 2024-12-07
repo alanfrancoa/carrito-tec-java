@@ -18,16 +18,13 @@
     
     <ul class="list-group">
         <li class="list-group-item">
-            <a href="EmpleadoController?accion=listarArticulos" class="btn btn-primary btn-block">Gestionar Artículos</a>
+            <a href="${pageContext.request.contextPath}/empleado?accion=listarArticulos" class="btn btn-primary btn-block">Gestionar Artículos</a>
         </li>
         <li class="list-group-item">
-            <a href="EmpleadoController?accion=listarClientes" class="btn btn-secondary btn-block">Gestionar Clientes</a>
+            <a href="${pageContext.request.contextPath}/empleado?accion=historialCompras" class="btn btn-primary btn-block">Gestionar Artículos</a>
         </li>
         <li class="list-group-item">
-            <a href="EmpleadoController?accion=listarEmpleados" class="btn btn-warning btn-block">Gestionar Empleados</a>
-        </li>
-        <li class="list-group-item">
-            <a href="EmpleadoController?accion=historialCompras" class="btn btn-info btn-block">Ver Historial de Compras</a>
+            <a href="${pageContext.request.contextPath}/empleado?accion=formularioUsuario" class="btn btn-info btn-block">Ver Historial de Compras</a>
         </li>
     </ul>
 </div>
