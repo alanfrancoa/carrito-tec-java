@@ -28,8 +28,7 @@
     
     <!-- Enlace para volver al dashboard -->
     <div class="mt-3">
-        <a href="/cliente?action=Dashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
-
+        <a href="cliente?accion=Dashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
     </div>
 </div>
 
