@@ -43,6 +43,9 @@
             </c:forEach>
         </tbody>
     </table>
+    <div class="mt-3">
+        <a href="empleado?accion=empleadoDashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
+    </div>
 </div>
 
 </body>

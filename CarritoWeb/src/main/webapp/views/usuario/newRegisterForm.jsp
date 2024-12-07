@@ -44,6 +44,10 @@
             <button type="submit" class="btn btn-primary">Registrar</button>
         </div>
     </form>
+    
+    <div class="mt-3">
+        <a href="empleado?accion=empleadoDashboard" class="btn btn-secondary btn-block">Volver al Dashboard</a>
+    </div>
 </div>
 
 <!-- Script para mostrar el campo de saldo cuando se selecciona 'Cliente' -->

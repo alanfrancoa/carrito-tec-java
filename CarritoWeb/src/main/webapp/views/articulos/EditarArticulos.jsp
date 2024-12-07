@@ -42,7 +42,11 @@
             <input type="text" class="form-control" id="rubro" name="rubro" value="${articulo.rubro}" required>
         </div>
 
-        <button type="submit" class="btn btn-success">Editar Artículo</button>
+        
+        <div class="d-flex gap-3" >  
+			<button type="submit" class="btn btn-success w-25">Editar Artículo</button>
+			<a href="empleado?accion=listarArticulos" class="btn btn-secondary btn-block w-25 ml-2">Cancelar</a>   
+    		</div>
     </form>
 </div>
 

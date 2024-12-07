@@ -28,7 +28,10 @@
             <form action="articulos" method="post">
                 <input type="hidden" name="codigo" value="${articulo.codigo_art}">
                 <input type="hidden" name="accion" value="EliminarArticulos">
-                <button type="submit" class="btn btn-danger">Eliminar Artículo</button>
+                <div class="d-flex gap-3" >  
+	                <button type="submit" class="btn btn-danger w-25">Eliminar Artículo</button>
+		        	<a href="empleado?accion=listarArticulos" class="btn btn-secondary btn-block w-25 ml-2">Cancelar</a>   
+        		</div>
             </form>
         </div>
     </div>

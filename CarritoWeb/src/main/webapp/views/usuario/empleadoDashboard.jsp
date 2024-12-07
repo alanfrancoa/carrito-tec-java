@@ -21,10 +21,10 @@
             <a href="${pageContext.request.contextPath}/empleado?accion=listarArticulos" class="btn btn-primary btn-block">Gestionar Artículos</a>
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/empleado?accion=historialCompras" class="btn btn-primary btn-block">Gestionar Artículos</a>
+            <a href="${pageContext.request.contextPath}/empleado?accion=historialCompras" class="btn btn-warning btn-block">Historial de Compras</a>
         </li>
         <li class="list-group-item">
-            <a href="${pageContext.request.contextPath}/empleado?accion=formularioUsuario" class="btn btn-info btn-block">Ver Historial de Compras</a>
+            <a href="${pageContext.request.contextPath}/empleado?accion=formularioUsuario" class="btn btn-info btn-block">Crear Nuevo Usuario</a>
         </li>
     </ul>
 </div>

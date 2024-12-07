@@ -41,10 +41,14 @@
             <label for="rubro">Rubro</label>
             <input type="text" class="form-control" id="rubro" name="rubro" placeholder="Ingrese el rubro del artículo" required>
         </div>
-
-        <button type="submit" class="btn btn-success">Crear</button>
+		<div class="d-flex gap-3" >
+			<button type="submit" class="btn btn-success w-25">Crear</button>    
+	        <a href="empleado?accion=listarArticulos" class="btn btn-danger btn-block w-25 ml-2">Cancelar</a>   
+        </div>
     </form>
+   
 </div>
+     
 
 <!-- Incluir JavaScript de Bootstrap (opcional para funcionalidades dinámicas) -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
