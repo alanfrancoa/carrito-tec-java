@@ -59,6 +59,16 @@
             </c:forEach>
         </tbody>
     </table>
+    <div class="d-flex justify-content-between mt-4">
+				<a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver al dashboard
+				</a>
+				<a href="carrito?accion=index" class="btn btn-primary">
+					Ver carrito
+				</a>
+				<a href="carrito?accion=finalizar" class="btn btn-success">
+					Finalizar compra
+				</a>
+			</div>
 </div>
 
 <!-- Mostrar mensajes de error de la sesión -->

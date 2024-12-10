@@ -84,7 +84,7 @@ public class ClienteController extends HttpServlet {
 	}
 
 	private void comprar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("/views/Carrito/agregarAlCarrito.jsp").forward(request, response);		
+		request.getRequestDispatcher("/views/Carrito/carrito.jsp").forward(request, response);		
 	}
 
 	// Método que maneja las solicitudes POST

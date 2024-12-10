@@ -104,7 +104,7 @@ public class CarritoController extends HttpServlet {
 		    request.setAttribute("detalleFactura", detalleFactura);
 		    request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
 
-		    request.getRequestDispatcher("/views/carrito/Factura.jsp").forward(request, response);
+		    request.getRequestDispatcher("/views/Compras/Factura.jsp").forward(request, response);
 		    return;
 	}
 
@@ -114,7 +114,7 @@ public class CarritoController extends HttpServlet {
 
         Carrito carritoActual = obtenerCarritoDeSesion(request);
         request.setAttribute("carrito", carritoActual);
-        request.getRequestDispatcher("/views/carrito/carrito.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/Carrito/carrito.jsp").forward(request, response);
     }
 
     private void mostrarMontoTotal(HttpServletRequest request, HttpServletResponse response)
@@ -123,7 +123,7 @@ public class CarritoController extends HttpServlet {
         Carrito carritoActual = obtenerCarritoDeSesion(request);
         double montoTotal = carritoActual.verMontoTotal();
         request.setAttribute("montoTotal", montoTotal);
-        request.getRequestDispatcher("/views/carrito/carritoTotal.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/Carrito/carritoTotal.jsp").forward(request, response);
     }
     
     private void mostrarVistaAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -135,7 +135,7 @@ public class CarritoController extends HttpServlet {
     	
 		request.setAttribute("listita", listArt);
 		
-    	request.getRequestDispatcher("/views/carrito/agregarAlCarrito.jsp").forward(request, response);
+    	request.getRequestDispatcher("/views/Carrito/agregarAlCarrito.jsp").forward(request, response);
 	}
 
     private void finalizarCompra(HttpServletRequest request, HttpServletResponse response)
@@ -160,7 +160,7 @@ public class CarritoController extends HttpServlet {
         
         request.setAttribute("total", montoFinal);
                        
-        request.getRequestDispatcher("/views/carrito/Pago.jsp").forward(request, response);
+        request.getRequestDispatcher("/views/Carrito/Pago.jsp").forward(request, response);
        
         
     }
