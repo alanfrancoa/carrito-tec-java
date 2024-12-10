@@ -62,6 +62,9 @@ public class ClienteController extends HttpServlet {
 			case "Dashboard": // Muestra el dashboard del cliente
 				mostrarDashboard(request, response);
 				break;
+			case "Comprar": // Muestra el formulario para transferir saldo
+				comprar(request, response);
+				break;
 			case "IngresarSaldo": // Muestra el formulario para ingresar saldo
 				mostrarIngresarSaldo(request, response);
 				break;
@@ -78,6 +81,10 @@ public class ClienteController extends HttpServlet {
 			response.sendRedirect(request.getContextPath() + "/views/usuario/registerForm.jsp");
 		}
 
+	}
+
+	private void comprar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/views/Carrito/agregarAlCarrito.jsp").forward(request, response);		
 	}
 
 	// Método que maneja las solicitudes POST

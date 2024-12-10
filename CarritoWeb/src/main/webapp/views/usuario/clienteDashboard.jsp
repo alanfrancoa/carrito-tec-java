@@ -11,6 +11,7 @@
 <link
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
 	rel="stylesheet">
+<script src="https://unpkg.com/feather-icons"></script>
 </head>
 <body>
 
@@ -35,6 +36,9 @@
 		<h3 class="mb-3">Opciones:</h3>
 		<ul class="list-group">
 			<li class="list-group-item"><a
+				href="${pageContext.request.contextPath}/cliente?accion=Comprar"
+				class="btn btn-danger btn-block"><i data-feather="shopping-cart"></i> COMPRAR</a></li>
+			<li class="list-group-item"><a
 				href="${pageContext.request.contextPath}/cliente?accion=IngresarSaldo"
 				class="btn btn-primary btn-block">Ingresar saldo</a></li>
 			<li class="list-group-item"><a
@@ -52,6 +56,9 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+		<script>
+      feather.replace();
+    </script>
 
 </body>
 </html>
