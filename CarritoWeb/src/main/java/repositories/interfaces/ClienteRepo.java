@@ -5,7 +5,7 @@ import java.util.List;
 import modelos.usuarios.Cliente;
 
 public interface ClienteRepo {
-	//Lista de usuarios empleados
+	//Lista de usuarios clientes
     List<Cliente> getAllClientes();
     
     //obtener cliente 

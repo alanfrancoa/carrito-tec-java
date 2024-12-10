@@ -60,12 +60,9 @@
 
 			<!-- Botones para acciones -->
 			<div class="d-flex justify-content-between mt-4">
-				<a href="carrito?accion=agregar" class="btn btn-primary">Agregar
-					Más Productos
-				</a>
-				<a href="carrito?accion=finalizar" class="btn btn-success">
-					Finalizar compra
-				</a>
+				<a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver al Dashboard </a> 
+				<a href="carrito?accion=agregar" class="btn btn-primary">Agregar más Productos </a> 
+					<a href="carrito?accion=finalizar" class="btn btn-success"> Finalizar compra </a>
 			</div>
 		</c:if>
 	</div>
