@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html lang="es">
@@ -37,7 +37,8 @@
 		<ul class="list-group">
 			<li class="list-group-item"><a
 				href="${pageContext.request.contextPath}/cliente?accion=Comprar"
-				class="btn btn-danger btn-block"><i data-feather="shopping-cart"></i> COMPRAR</a></li>
+				class="btn btn-success btn-block"><i data-feather="shopping-cart"></i>
+					COMPRAR</a></li>
 			<li class="list-group-item"><a
 				href="${pageContext.request.contextPath}/cliente?accion=IngresarSaldo"
 				class="btn btn-primary btn-block">Ingresar saldo</a></li>
@@ -46,7 +47,10 @@
 				class="btn btn-warning btn-block">Retirar saldo</a></li>
 			<li class="list-group-item"><a
 				href="${pageContext.request.contextPath}/cliente?accion=TransferirSaldo"
-				class="btn btn-success btn-block">Transferir saldo</a></li>
+				class="btn btn-info btn-block">Transferir saldo</a></li>
+			<li class="list-group-item"><a
+				href="${pageContext.request.contextPath}/Login?accion=Logout"
+				class="btn btn-danger btn-block">Cerrar Sesión</a></li>
 		</ul>
 	</div>
 
@@ -56,9 +60,9 @@
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
 	<script
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-		<script>
-      feather.replace();
-    </script>
+	<script>
+		feather.replace();
+	</script>
 
 </body>
 </html>

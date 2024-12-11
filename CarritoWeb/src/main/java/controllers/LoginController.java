@@ -35,6 +35,7 @@ public class LoginController extends HttpServlet {
 
 		switch (accion) {
 		case "Login" -> mostrarLoginUsuario(request, response);
+		case "Logout" -> logoutUsuario(request, response);
 		default -> response.sendError(404);
 		}
 	}
@@ -63,7 +64,7 @@ public class LoginController extends HttpServlet {
 	/*----------------------loginUsuario--------------------------*/
 	private void loginUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		
+
 		// Tomamos los valores del input del JSP
 		String nombreUsuario = request.getParameter("nombreUsuario");
 		String claveUsuario = request.getParameter("claveUsuario");
@@ -71,7 +72,7 @@ public class LoginController extends HttpServlet {
 		// Buscamos el usuario
 		UsuarioBase usuarioEncontrado = usuarioRepo.getAllUsuarios().stream()
 				.filter(u -> u.getNombreUsuario().equals(nombreUsuario)).findFirst().orElse(null);
-		
+
 		if (usuarioEncontrado != null && usuarioEncontrado.getClaveUsuario().equals(claveUsuario)) {
 
 			String tipoUsuario = usuarioEncontrado.getTipoUsuario();
@@ -79,27 +80,40 @@ public class LoginController extends HttpServlet {
 			if (usuarioEncontrado instanceof Cliente cliente) {
 
 				HttpSession session = request.getSession();
-				
+
 				session.setAttribute("usuario", cliente);
 
 				response.sendRedirect(request.getContextPath() + "/views/usuario/clienteDashboard.jsp");
 
 			} else if ("EMPLEADO".equals(tipoUsuario)) {
-				
+
 				// Guardamos el usuario en la sesión
 				HttpSession session = request.getSession();
 
 				// Le pasamos el usuario encontrado
 				session.setAttribute("usuario", usuarioEncontrado);
-				
+
 				response.sendRedirect(request.getContextPath() + "/views/usuario/empleadoDashboard.jsp");
 			}
 
 		} else {
-			// Si el usuario no existe o la contraseña es incorrecta, que nos muestre un mensaje de error
+			// Si el usuario no existe o la contraseña es incorrecta, que nos muestre un
+			// mensaje de error
 			response.sendRedirect("Login?error=Usuario o clave incorrectos");
 		}
 
+	}
+
+	/*----------------------logoutUsuario--------------------------*/
+	private void logoutUsuario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		// Invalida la sesión del usuario
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			session.invalidate();
+		}
+
+		response.sendRedirect(request.getContextPath() + "/Login?accion=Login");
 	}
 
 }
