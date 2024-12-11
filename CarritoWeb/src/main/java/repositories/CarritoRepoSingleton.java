@@ -47,5 +47,12 @@ public class CarritoRepoSingleton implements CarritoRepo {
 	public double finalizarCompra() {
 		return carrito.finalizarCompra();
 	}
+
+
+	@Override
+	public boolean eliminarRenglon(String codigoArt) {
+	return carrito.eliminarRenglon(codigoArt);
+	}
+	
 	
 }

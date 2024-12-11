@@ -87,4 +87,12 @@ public class Carrito {
 
         return compra;
     }
+	
+	public boolean eliminarRenglon(String codigoArt) {
+	    // Busca el renglón con el código de artículo especificado y lo elimina
+	    return listaCompra.removeIf(renglon -> renglon.getProducto().getCodigo_art().equals(codigoArt));
+	    
+	}
+	
+	
 }

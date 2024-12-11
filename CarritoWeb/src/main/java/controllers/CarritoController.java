@@ -80,11 +80,56 @@ public class CarritoController extends HttpServlet {
             case "total" -> mostrarMontoTotal(request, response);
             case "agregar" -> mostrarVistaAgregar(request, response);
             case "finalizar" -> finalizarCompra(request, response);
-            case "verFactura" -> mostrarFactura(request, response); 
+            case "verFactura" -> mostrarFactura(request, response);
+            case "eliminarRenglon" -> eliminarRenglonDelCarrito(request, response);
             default -> response.sendError(404);
         }
     }
 
+	private void eliminarRenglonDelCarrito(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		
+		String codigoArt = request.getParameter("codigo_art");
+	    Carrito carritoActual = obtenerCarritoDeSesion(request);
+
+	    //Buscar el renglon en el carrito
+	    Renglon renglonAEliminar = null;
+	    for (Renglon renglon : carritoActual.verCarrito()) {
+	        if (renglon.getProducto().getCodigo_art().equals(codigoArt)) {
+	            renglonAEliminar = renglon;
+	            break;
+	        }
+	    }
+
+	    if (renglonAEliminar != null) {
+	        //Obtener el articulo del renglon
+	        Articulo articulo = renglonAEliminar.getProducto();
+	        int cantidad = renglonAEliminar.getCantidad();
+
+	        //actualiza el stock del articulo del renglon eliminado
+	        articulo.setStock(articulo.getStock() + cantidad);
+
+	        //Actualizar el artículo en el repositorio
+	        ArticulosRepoSingleton articuloRepo = ArticulosRepoSingleton.getInstance();
+	        articuloRepo.updateArticulo(articulo);
+
+	        //Eliminar el renglon del carrito
+	        carritoActual.verCarrito().remove(renglonAEliminar);
+	     
+	        // **Sincronizar el carrito actualizado con la sesión**
+	        request.getSession().setAttribute("carrito", carritoActual);
+
+	        agregarMensaje(request, "El producto fue eliminado del carrito y el stock actualizado.");
+	    } else {
+	        agregarMensaje(request, "No se encontró el producto en el carrito.");
+	    }
+	   
+	    
+	    request.getRequestDispatcher("/views/Carrito/carrito.jsp").forward(request, response);
+
+
+	}
+
+	
 	private void mostrarFactura(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		 HttpSession session = request.getSession();
 		    Carrito carritoActual = (Carrito) session.getAttribute("carrito");
@@ -207,4 +252,4 @@ public class CarritoController extends HttpServlet {
         }
     
     }
-}
+    }

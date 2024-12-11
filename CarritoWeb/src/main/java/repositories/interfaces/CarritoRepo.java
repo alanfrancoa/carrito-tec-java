@@ -11,5 +11,6 @@ public interface CarritoRepo {
 	List<Renglon> verCarrito();
 	double verMontoTotal();
 	double finalizarCompra();
+	boolean eliminarRenglon(String codigoArt);
 
 }

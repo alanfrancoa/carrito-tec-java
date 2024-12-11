@@ -39,6 +39,7 @@
 						<th>Producto</th>
 						<th>Precio Unitario</th>
 						<th>Cantidad</th>
+						<th>Accion</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -47,6 +48,14 @@
 							<td>${item.producto.nombre}</td>
 							<td>$${item.producto.precio}</td>
 							<td>${item.cantidad}</td>
+							  <td>
+                                <!-- Btn eliminar renglon del carrito -->
+                                <form method="get" action="${pageContext.request.contextPath}/carrito">
+                                    <input type="hidden" name="accion" value="eliminarRenglon">
+                                    <input type="hidden" name="codigo_art" value="${item.producto.codigo_art}">
+                                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                </form>
+                            </td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -60,9 +69,11 @@
 
 			<!-- Botones para acciones -->
 			<div class="d-flex justify-content-between mt-4">
-				<a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver al Dashboard </a> 
-				<a href="carrito?accion=agregar" class="btn btn-primary">Agregar más Productos </a> 
-					<a href="carrito?accion=finalizar" class="btn btn-success"> Finalizar compra </a>
+				<a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver
+					al Dashboard </a> <a href="carrito?accion=agregar"
+					class="btn btn-primary">Agregar más Productos </a> <a
+					href="carrito?accion=finalizar" class="btn btn-success">
+					Finalizar compra </a>
 			</div>
 		</c:if>
 	</div>
