@@ -58,7 +58,7 @@ public class EmpleadoController extends HttpServlet {
 
 			// Verificamos si el usuario está logueado
 			if (usuario == null || !"EMPLEADO".equals(usuario.getTipoUsuario())) {
-				response.sendRedirect(request.getContextPath() + "/views/usuario/registerForm.jsp");
+				response.sendRedirect("Login");
 				return;
 			}
 
@@ -82,7 +82,7 @@ public class EmpleadoController extends HttpServlet {
 				getEmpleadoDashboard(request, response);
 			}
 		} catch (UsuarioDeslogueadoException e) {
-			response.sendRedirect(request.getContextPath() + "/views/usuario/registerForm.jsp");
+			response.sendRedirect("Login");
 		}
 
 	}

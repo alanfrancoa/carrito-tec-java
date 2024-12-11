@@ -46,7 +46,7 @@ public class ClienteController extends HttpServlet {
 
 			// Verificamos si el usuario está logueado
 			if (usuario == null || !"CLIENTE".equals(usuario.getTipoUsuario())) {
-				response.sendRedirect(request.getContextPath() + "/views/usuario/registerForm.jsp");
+				response.sendRedirect("Login");
 				return;
 			}
 
@@ -78,7 +78,7 @@ public class ClienteController extends HttpServlet {
 				mostrarDashboard(request, response);
 			}
 		} catch (UsuarioDeslogueadoException e) {
-			response.sendRedirect(request.getContextPath() + "/views/usuario/registerForm.jsp");
+			response.sendRedirect("Login");
 		}
 
 	}
