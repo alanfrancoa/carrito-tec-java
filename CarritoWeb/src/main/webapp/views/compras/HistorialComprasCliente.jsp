@@ -25,7 +25,7 @@
             </tr>
         </thead>
         <tbody>
-            <c:forEach var="compra" items="${comprasCliente}">
+            <c:forEach var="compra" items="${compras}">
                 <tr>
                     <td>${compra.numeroFactura}</td>
                     <td>${compra.fechaCompra}</td>
