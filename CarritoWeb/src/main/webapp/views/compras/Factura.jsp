@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="text-center mt-4">
-                    <a href="ClienteController?action=Dashboard" class="btn btn-secondary">Volver al Dashboard</a>
+                    <a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver al Dashboard</a>
                 </div>
             </div>
         </div>

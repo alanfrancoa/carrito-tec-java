@@ -149,7 +149,7 @@ public class CarritoController extends HttpServlet {
 		    request.setAttribute("detalleFactura", detalleFactura);
 		    request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
 
-		    request.getRequestDispatcher("/views/Compras/Factura.jsp").forward(request, response);
+		    request.getRequestDispatcher("/views/compras/Factura.jsp").forward(request, response);
 		    return;
 	}
 

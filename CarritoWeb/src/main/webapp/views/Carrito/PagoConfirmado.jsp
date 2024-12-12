@@ -21,7 +21,7 @@
 				</div>
 
                 <div class="mt-3 text-center">
-                    <a href="ClienteController?action=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
+                    <a href="cliente?accion=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
                 </div>
             </div>
         </div>
