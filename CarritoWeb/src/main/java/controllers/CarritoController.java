@@ -32,7 +32,6 @@ public class CarritoController extends HttpServlet {
 
 	private static ArticulosRepoSingleton articuloRepo;
 	private static CompraRepoSingleton compraRepo;
-	
 
 	// ------------------------ Métodos del Servlet ------------------------ //
 
@@ -102,26 +101,25 @@ public class CarritoController extends HttpServlet {
 
 	private void confirmacionComprar(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException, UsuarioDeslogueadoException {
-		// Obtenemos el carrito actual de sesion
+		// Obtenemos el carrito actual de sesión
 		Carrito carritoActual = obtenerCarritoDeSesion(request);
 
-		// Validamos si el carrito esta vacio
+		// Validamos si el carrito está vacío
 		if (carritoActual.verCarrito().isEmpty()) {
 			agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
-			response.sendRedirect("carrito?accion=carrito");
+			response.sendRedirect("carrito?accion=index");
 			return;
 		}
 
-		// Obtenemos la sesion actual
+		// Obtenemos la sesión actual
 		HttpSession session = request.getSession();
 
 		// Creamos el decorador
 		SessionDecorator sessionDec = new SessionDecorator(session);
 
 		try {
-
 			this.compraRepo = CompraRepoSingleton.getInstance();
-			
+
 			// Obtenemos el usuario logeado
 			UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
 
@@ -135,36 +133,36 @@ public class CarritoController extends HttpServlet {
 			double saldoCliente = cliente.getSaldo();
 
 			// Verificar si el saldo es suficiente
-			if (montoTotal < saldoCliente) {
-
-				// Si es suficiente descontarlo
+			if (montoTotal <= saldoCliente) {
+				// Descontar del saldo del cliente
 				cliente.setSaldo(saldoCliente - montoTotal);
 
-				// Transformar este carrito en una compra
+				// Transformar el carrito en una compra
 				String nombreCliente = cliente.getNombreUsuario();
 				List<Renglon> renglones = carritoActual.verCarrito();
 				String numeroFactura = generarNumeroFactura();
-				
+
 				request.setAttribute("numeroFactura", numeroFactura);
-				
+
 				Compra nuevaCompra = new Compra(nombreCliente, renglones, numeroFactura, montoTotal);
-				
 				CarritoController.compraRepo.agregarCompra(nuevaCompra);
-				
+
+				// Vaciar el carrito
+				carritoActual.finalizarCompra();
+
+				// Actualizar la sesión con el carrito vacío
+				session.setAttribute("carrito", carritoActual);
+
+				// Redirigir a la vista de confirmación
 				request.getRequestDispatcher("/views/Carrito/PagoConfirmado.jsp").forward(request, response);
-
-				return;
 			} else {
-				response.sendRedirect("carrito?error=No tiene saldo suficiente para realizar la compra");
-				return;
+				agregarMensaje(request, "No tiene saldo suficiente para realizar la compra.");
+				response.sendRedirect("carrito?accion=index");
 			}
-
 		} catch (UsuarioDeslogueadoException e) {
-			// TODO: handle exception
+			response.sendRedirect("carrito?accion=index&error=Usuario no autenticado.");
 		}
-
 	}
-
 
 	private void eliminarRenglonDelCarrito(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
@@ -218,8 +216,6 @@ public class CarritoController extends HttpServlet {
 			response.sendRedirect("carrito?accion=carrito");
 			return;
 		}
-
-		
 
 		double total = carritoActual.verMontoTotal();
 		List<Renglon> detalleFactura = carritoActual.verCarrito();
