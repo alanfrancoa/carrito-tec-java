@@ -12,6 +12,12 @@
 <body>
 	<div class="container mt-5">
 		<h1 class="mb-4">Tu Carrito de Compras</h1>
+		
+		<c:if test="${param.error != null}">
+				<div class="alert alert-danger mt-3">
+					<strong>Error!</strong> ${param.error}
+				</div>
+			</c:if>
 
 		<!-- Mensaje de sesión -->
 		<c:if test="${not empty sessionScope.mensaje}">
