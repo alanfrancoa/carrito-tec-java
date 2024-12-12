@@ -144,6 +144,9 @@ public class CarritoController extends HttpServlet {
 				request.setAttribute("numeroFactura", numeroFactura);
 
 				Compra nuevaCompra = new Compra(nombreCliente, renglones, numeroFactura, montoTotal);
+				
+				session.setAttribute("compra", nuevaCompra);
+				
 				CarritoController.compraRepo.agregarCompra(nuevaCompra);
 
 				// Vaciar el carrito
@@ -208,21 +211,15 @@ public class CarritoController extends HttpServlet {
 	private void mostrarFactura(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
 		HttpSession session = request.getSession();
-		Carrito carritoActual = (Carrito) session.getAttribute("carrito");
-
-		if (carritoActual.verCarrito().isEmpty()) {
-			agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
-			response.sendRedirect("carrito?accion=carrito");
-			return;
-		}
-
-		double total = carritoActual.verMontoTotal();
-		List<Renglon> detalleFactura = carritoActual.verCarrito();
+		Compra compraActual = (Compra) session.getAttribute("compra"); //trae la compra actual
+		
+		double total = compraActual.getMontoTotal();
+		List<Renglon> detalleFactura = compraActual.getDetalleCompra();
 		
 		String numeroFactura = generarNumeroFactura();
-	    request.setAttribute("numeroFactura", numeroFactura);
+		session.setAttribute("numeroFactura", numeroFactura);
 		
-		System.out.println(detalleFactura);
+		/*System.out.println(detalleFactura);*/
 
 		request.setAttribute("numeroFactura", numeroFactura);
 		request.setAttribute("detalleFactura", detalleFactura);
@@ -269,10 +266,6 @@ public class CarritoController extends HttpServlet {
 
 		// Calcular el monto total
 		double montoFinal = carritoActual.verMontoTotal();
-		for (Renglon renglon : carritoActual.verCarrito()) {
-			Articulo articulo = renglon.getProducto();
-			articulo.setStock(articulo.getStock() - renglon.getCantidad());
-		}
 
 		request.setAttribute("total", montoFinal);
 
