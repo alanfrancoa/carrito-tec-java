@@ -9,14 +9,13 @@ import repositories.interfaces.CompraRepo;
 public class CompraRepoSingleton implements CompraRepo{
 	
     private static CompraRepoSingleton instance;
-	private Compra compra;
     private List<Compra> comprasRealizadas;
 
     public CompraRepoSingleton() {
         this.comprasRealizadas = new ArrayList<>();
     }
 
-    public static synchronized CompraRepo getInstance() {
+    public static CompraRepoSingleton getInstance() {
         if (instance == null) {
             instance = new CompraRepoSingleton();
         }
