@@ -16,10 +16,12 @@ import decorators.SessionDecorator;
 import exceptions.UsuarioDeslogueadoException;
 import interfaces.Usuario;
 import modelos.articulos.Articulo;
+import modelos.compras.Compra;
 import modelos.usuarios.Cliente;
 import modelos.usuarios.Empleado;
 import modelos.usuarios.UsuarioBase;
 import repositories.ArticulosRepoSingleton;
+import repositories.CompraRepoSingleton;
 import repositories.UsuarioRepoSingleton;
 
 @WebServlet("/empleado")
@@ -29,6 +31,7 @@ public class EmpleadoController extends HttpServlet {
 	// Repositorios Singleton
 	private UsuarioRepoSingleton usuarioRepo;
 	private ArticulosRepoSingleton articuloRepo;
+	private CompraRepoSingleton compraRepo;
 
 	/**
 	 * Constructor del controlador
@@ -38,6 +41,7 @@ public class EmpleadoController extends HttpServlet {
 		// Inicializamos los repositorios
 		this.usuarioRepo = UsuarioRepoSingleton.getInstance();
 		this.articuloRepo = ArticulosRepoSingleton.getInstance();
+		this.compraRepo = CompraRepoSingleton.getInstance();
 	}
 
 	/**
@@ -124,9 +128,12 @@ public class EmpleadoController extends HttpServlet {
 
 	private void historialCompras(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Aquí deberías implementar cómo obtener el historial desde tu repositorio o
-		// servicio.
-		// redirigimos a la vista de historial
+		
+		
+		List<Compra> compras = this.compraRepo.obtenerTodasLasCompras();
+		
+		request.setAttribute("compras", compras);
+		
 		request.getRequestDispatcher("/views/compras/HistorialComprasTotal.jsp").forward(request, response);
 	}
 
