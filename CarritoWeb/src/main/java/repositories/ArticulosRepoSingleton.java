@@ -26,9 +26,9 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
         Articulo articulo2 = new Articulo("ABC2", "Coca-cola", 3700, 1000, "Bebidas");
         Articulo articulo3 = new Articulo("ABC3", "Oreos", 1700, 80, "Galletas");
 
-        this.createArticulo(articulo1);
-        this.createArticulo(articulo2);
-        this.createArticulo(articulo3);
+        this.listaArticulos.add(articulo1);
+        this.listaArticulos.add(articulo2);
+        this.listaArticulos.add(articulo3);
     }
 
     // Método para obtener la instancia única
@@ -42,8 +42,7 @@ public class ArticulosRepoSingleton implements ArticuloRepo {
     @Override
     public List<Articulo> getAllArticulos() {
         // Devolver una copia de la lista de artículos
-    	
-    	return new ArrayList<>(this.listaArticulos);
+    	return this.listaArticulos;
     }
 
     @Override
