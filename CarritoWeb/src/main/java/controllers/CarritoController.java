@@ -77,14 +77,29 @@ public class CarritoController extends HttpServlet {
 
         switch (accion) {
             case "index" -> mostrarCarrito(request, response);
-            case "total" -> mostrarMontoTotal(request, response);
+            /*case "total" -> mostrarMontoTotal(request, response);*/
             case "agregar" -> mostrarVistaAgregar(request, response);
             case "finalizar" -> finalizarCompra(request, response);
-            case "verFactura" -> mostrarFactura(request, response);
+            case "confirmacion" -> confirmacionComprar(request, response);
+            case "mostrarFactura" -> mostrarFactura(request, response);
             case "eliminarRenglon" -> eliminarRenglonDelCarrito(request, response);
             default -> response.sendError(404);
         }
     }
+
+	private void confirmacionComprar(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+		// Obtenemos el carrito actual de sesion
+        Carrito carritoActual = obtenerCarritoDeSesion(request);
+
+        // Validamos si el carrito esta vacio
+        if (carritoActual.verCarrito().isEmpty()) {
+            agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
+            response.sendRedirect("carrito?accion=carrito");
+            return;
+        }
+                              
+        request.getRequestDispatcher("/views/Carrito/PagoConfirmado.jsp").forward(request, response);
+	}
 
 	private void eliminarRenglonDelCarrito(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
@@ -134,7 +149,7 @@ public class CarritoController extends HttpServlet {
 		 HttpSession session = request.getSession();
 		    Carrito carritoActual = (Carrito) session.getAttribute("carrito");
 
-		    if (carritoActual.verCarrito().isEmpty()) {
+		   if (carritoActual.verCarrito().isEmpty()) {
 		    	 agregarMensaje(request, "El carrito está vacío. No se puede finalizar la compra.");
 		            response.sendRedirect("carrito?accion=carrito");
 		            return;
@@ -162,14 +177,14 @@ public class CarritoController extends HttpServlet {
         request.getRequestDispatcher("/views/Carrito/carrito.jsp").forward(request, response);
     }
 
-    private void mostrarMontoTotal(HttpServletRequest request, HttpServletResponse response)
+    /*private void mostrarMontoTotal(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         Carrito carritoActual = obtenerCarritoDeSesion(request);
         double montoTotal = carritoActual.verMontoTotal();
         request.setAttribute("montoTotal", montoTotal);
         request.getRequestDispatcher("/views/Carrito/carritoTotal.jsp").forward(request, response);
-    }
+    }*/
     
     private void mostrarVistaAgregar(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	

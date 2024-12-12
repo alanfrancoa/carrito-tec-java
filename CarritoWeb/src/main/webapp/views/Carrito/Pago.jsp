@@ -22,16 +22,14 @@
                         <label class="form-label">Total:</label>
                         <h3 class="form-control-plaintext">$ <c:out value="${total}"/></h3>
                     </div>
-
-                    <div class="mb-3 text-center">
-                        <button type="submit" class="btn btn-primary w-100">Confirmar</button>
-                    </div>
+                    
+                    <div class="mb-3 text-center" >  
+		                <a href="carrito?accion=confirmacion" class="btn btn-primary w-100 mb-3">Pagar</a>
+			        	<a href="carrito?accion=index" class="btn btn-secondary btn-block w-25">Cancelar</a>   
+        			</div>
                 </form>
             </div>
             
-            <div class="mt-3 text-center">
-                <a href="carrito?action=index" class="btn btn-secondary w-100">Volver al Dashboard</a>
-            </div>
         </div>
     </div>
 </div>

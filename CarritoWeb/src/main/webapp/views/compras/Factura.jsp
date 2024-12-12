@@ -34,9 +34,9 @@
                         <tbody>
                             <c:forEach var="item" items="${detalleFactura}">
                                 <tr>
-                                    <td><c:out value="${item.producto.nombre}"/></td>
+                                    <td><c:out value="${item.nombre}"/></td>
                                     <td><c:out value="${item.cantidad}"/></td>
-                                    <td><c:out value="${item.producto.precio}"/></td>
+                                    <td><c:out value="${item.precio}"/></td>
                                     <td><c:out value="${item.total}"/></td>
                                 </tr>
                             </c:forEach>
