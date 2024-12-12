@@ -19,7 +19,7 @@
 
                     <div class="text-center border-bottom pb-3 mb-4">
                         <h2 class="fw-bold mb-0">Factura B</h2>
-                        <p class="mb-0">Número de Comprobante: <strong><c:out value="${numeroFactura}"/></strong></p>
+                        <p class="mb-0">Número de factura: <strong><c:out value="${numeroFactura}"/></strong></p>
                     </div>
 
                     <table class="table table-bordered table-striped text-center">

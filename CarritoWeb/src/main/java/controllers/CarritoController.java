@@ -83,7 +83,6 @@ public class CarritoController extends HttpServlet {
 
 		switch (accion) {
 		case "index" -> mostrarCarrito(request, response);
-		/* case "total" -> mostrarMontoTotal(request, response); */
 		case "agregar" -> mostrarVistaAgregar(request, response);
 		case "finalizar" -> finalizarCompra(request, response);
 		case "confirmacion" -> {
@@ -219,10 +218,13 @@ public class CarritoController extends HttpServlet {
 
 		double total = carritoActual.verMontoTotal();
 		List<Renglon> detalleFactura = carritoActual.verCarrito();
-
+		
+		String numeroFactura = generarNumeroFactura();
+	    request.setAttribute("numeroFactura", numeroFactura);
+		
 		System.out.println(detalleFactura);
 
-		request.getAttribute("numeroFactura");
+		request.setAttribute("numeroFactura", numeroFactura);
 		request.setAttribute("detalleFactura", detalleFactura);
 		request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
 
@@ -238,17 +240,6 @@ public class CarritoController extends HttpServlet {
 		request.setAttribute("carrito", carritoActual);
 		request.getRequestDispatcher("/views/Carrito/carrito.jsp").forward(request, response);
 	}
-
-	/*
-	 * private void mostrarMontoTotal(HttpServletRequest request,
-	 * HttpServletResponse response) throws ServletException, IOException {
-	 * 
-	 * Carrito carritoActual = obtenerCarritoDeSesion(request); double montoTotal =
-	 * carritoActual.verMontoTotal(); request.setAttribute("montoTotal",
-	 * montoTotal);
-	 * request.getRequestDispatcher("/views/Carrito/carritoTotal.jsp").forward(
-	 * request, response); }
-	 */
 
 	private void mostrarVistaAgregar(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
