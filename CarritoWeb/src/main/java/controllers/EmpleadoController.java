@@ -53,7 +53,7 @@ public class EmpleadoController extends HttpServlet {
 		SessionDecorator sessionDec = new SessionDecorator(session);
 
 		try {
-			
+
 			Usuario usuario = sessionDec.getUsuarioLogueado();
 
 			// Verificamos si el usuario está logueado
@@ -87,15 +87,16 @@ public class EmpleadoController extends HttpServlet {
 
 	}
 
-	private void getFormularioUsuario(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+	private void getFormularioUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
 		request.getRequestDispatcher("views/usuario/newRegisterForm.jsp").forward(request, response);
-		
+
 	}
 
 	private void getEmpleadoDashboard(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, UsuarioDeslogueadoException {
-		
+
 		HttpSession session = request.getSession();
 
 		SessionDecorator sessionDec = new SessionDecorator(session);
@@ -104,18 +105,20 @@ public class EmpleadoController extends HttpServlet {
 		UsuarioBase usuarioLog = sessionDec.getUsuarioLogueado();
 
 		Empleado empleado = (Empleado) usuarioLog;
-		
+
 		session.setAttribute("usuario", empleado);
-		
+
 		request.getRequestDispatcher("views/usuario/empleadoDashboard.jsp").forward(request, response);
 
 	}
-	
+
 	private void listarArticulos(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<Articulo> articulos = articuloRepo.getAllArticulos();
 
-		request.setAttribute("articulos", articulos);
+		// Me traigo la lista de articulos
+		List<Articulo> listArt = articuloRepo.getAllArticulos();
+
+		request.setAttribute("listita", listArt);
 		request.getRequestDispatcher("/views/articulos/index.jsp").forward(request, response);
 	}
 
@@ -126,7 +129,7 @@ public class EmpleadoController extends HttpServlet {
 		// redirigimos a la vista de historial
 		request.getRequestDispatcher("/views/compras/HistorialComprasTotal.jsp").forward(request, response);
 	}
-	
+
 	/**
 	 * Método que maneja las solicitudes POST.
 	 */
