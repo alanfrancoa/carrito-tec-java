@@ -34,10 +34,10 @@
                         <tbody>
                             <c:forEach var="item" items="${detalleFactura}">
                                 <tr>
-                                    <td><c:out value="${item.nombre}"/></td>
+                                    <td><c:out value="${item.producto.getNombre()}"/></td>
                                     <td><c:out value="${item.cantidad}"/></td>
-                                    <td><c:out value="${item.precio}"/></td>
-                                    <td><c:out value="${item.total}"/></td>
+                                    <td><c:out value="${item.producto.getPrecio()}"/></td>
+                                    <td><c:out value="${item.calcularPrecioTotal()}"/></td>
                                 </tr>
                             </c:forEach>
                         </tbody>
