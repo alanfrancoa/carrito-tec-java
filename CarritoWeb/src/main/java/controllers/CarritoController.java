@@ -166,9 +166,8 @@ public class CarritoController extends HttpServlet {
 
 				// Redirigir a la vista de confirmación
 				request.getRequestDispatcher("/views/Carrito/PagoConfirmado.jsp").forward(request, response);
-			} else {
-				agregarMensaje(request, "No tiene saldo suficiente para realizar la compra.");
-				response.sendRedirect("carrito?accion=index");
+			} else {				
+				response.sendRedirect("carrito?accion=index&error=No tiene saldo suficiente para realizar la compra.");
 			}
 		} catch (UsuarioDeslogueadoException e) {
 			response.sendRedirect("carrito?accion=index&error=Usuario no autenticado.");
