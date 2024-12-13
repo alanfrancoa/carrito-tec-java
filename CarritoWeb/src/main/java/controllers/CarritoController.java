@@ -147,13 +147,9 @@ public class CarritoController extends HttpServlet {
 				
 				session.setAttribute("compra", nuevaCompra);
 				
+				System.out.println(nuevaCompra.getDetalleCompra());
+				
 				CarritoController.compraRepo.agregarCompra(nuevaCompra);
-
-				// Vaciar el carrito
-				carritoActual.finalizarCompra();
-
-				// Actualizar la sesión con el carrito vacío
-				session.setAttribute("carrito", carritoActual);
 
 				// Redirigir a la vista de confirmación
 				request.getRequestDispatcher("/views/Carrito/PagoConfirmado.jsp").forward(request, response);
@@ -210,19 +206,17 @@ public class CarritoController extends HttpServlet {
 
 	private void mostrarFactura(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+		
 		HttpSession session = request.getSession();
 		Compra compraActual = (Compra) session.getAttribute("compra"); //trae la compra actual
 		
 		double total = compraActual.getMontoTotal();
-		List<Renglon> detalleFactura = compraActual.getDetalleCompra();
 		
 		String numeroFactura = generarNumeroFactura();
 		session.setAttribute("numeroFactura", numeroFactura);
 		
-		/*System.out.println(detalleFactura);*/
-
 		request.setAttribute("numeroFactura", numeroFactura);
-		request.setAttribute("detalleFactura", detalleFactura);
+		request.setAttribute("detalleFactura", compraActual.getDetalleCompra());
 		request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
 
 		request.getRequestDispatcher("/views/compras/Factura.jsp").forward(request, response);
