@@ -22,7 +22,7 @@ public class UsuarioRepoSingleton implements UsuarioRepo {
 
 		// Instanciamos dos Usuarios de tipo Cliente y Empleado
 		Empleado empleado = new Empleado("Matias", "1234");
-		Cliente cliente = new Cliente("Chicho", "1234", 1000.00);
+		Cliente cliente = new Cliente("Chicho", "1234", 100000.00);
 		Cliente cliente2 = new Cliente("Sultan", "1234", 5000.00);
 
 		this.listaUsuarios.add(cliente);
