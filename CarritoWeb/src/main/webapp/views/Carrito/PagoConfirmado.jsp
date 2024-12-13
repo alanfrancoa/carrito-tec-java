@@ -21,6 +21,7 @@
 				</div>
 
                 <div class="mt-3 text-center">
+                <!-- HACER QUE EL BOTON NO SOLO REDIRIJA SINO QUE LIMPE EL CARRITO -->
                     <a href="cliente?accion=Dashboard" class="btn btn-secondary w-100">Volver al Dashboard</a>
                 </div>
             </div>

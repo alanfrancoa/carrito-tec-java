@@ -49,6 +49,7 @@
                 </div>
 
                 <div class="text-center mt-4">
+                 <!-- HACER QUE EL BOTON NO SOLO REDIRIJA SINO QUE LIMPE EL CARRITO -->
                     <a href="cliente?accion=Dashboard" class="btn btn-secondary">Volver al Dashboard</a>
                 </div>
             </div>
