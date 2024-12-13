@@ -94,8 +94,23 @@ public class CarritoController extends HttpServlet {
 		}
 		case "mostrarFactura" -> mostrarFactura(request, response);
 		case "eliminarRenglon" -> eliminarRenglonDelCarrito(request, response);
+		case "limpiarCarrito" -> limpiarCarrito(request, response);
 		default -> response.sendError(404);
 		}
+	}
+
+	private void limpiarCarrito(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+		// Obtenemos el carrito actual de sesion
+		Carrito carritoActual = obtenerCarritoDeSesion(request);
+		
+		carritoActual.finalizarCompra();
+		
+		HttpSession session = request.getSession();
+		
+		session.setAttribute("carrito", carritoActual);
+
+		response.sendRedirect("cliente?accion=Dashboard");
 	}
 
 	private void confirmacionComprar(HttpServletRequest request, HttpServletResponse response)
@@ -144,11 +159,9 @@ public class CarritoController extends HttpServlet {
 				request.setAttribute("numeroFactura", numeroFactura);
 
 				Compra nuevaCompra = new Compra(nombreCliente, renglones, numeroFactura, montoTotal);
-				
+
 				session.setAttribute("compra", nuevaCompra);
-				
-				System.out.println(nuevaCompra.getDetalleCompra());
-				
+
 				CarritoController.compraRepo.agregarCompra(nuevaCompra);
 
 				// Redirigir a la vista de confirmación
@@ -206,15 +219,15 @@ public class CarritoController extends HttpServlet {
 
 	private void mostrarFactura(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
-		
+
 		HttpSession session = request.getSession();
-		Compra compraActual = (Compra) session.getAttribute("compra"); //trae la compra actual
-		
+		Compra compraActual = (Compra) session.getAttribute("compra"); // trae la compra actual
+
 		double total = compraActual.getMontoTotal();
-		
+
 		String numeroFactura = generarNumeroFactura();
 		session.setAttribute("numeroFactura", numeroFactura);
-		
+
 		request.setAttribute("numeroFactura", numeroFactura);
 		request.setAttribute("detalleFactura", compraActual.getDetalleCompra());
 		request.setAttribute("factura", Map.of("total", total)); // Simula un objeto de factura para JSP
